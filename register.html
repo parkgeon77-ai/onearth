@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>매물 등록 — Onearth</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#09090B;--sf:#111113;--card:#161618;--accent:#BFA06A;--adim:rgba(191,160,106,0.10);--aline:rgba(191,160,106,0.22);--text:#ECEAE4;--t2:#7A7872;--t3:#3C3A37;--line:rgba(255,255,255,0.06);}
+body{background:var(--bg);color:var(--text);font-family:'Pretendard','Apple SD Gothic Neo',sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(9,9,11,0.92);backdrop-filter:blur(24px);border-bottom:0.5px solid var(--line);}
+.logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;letter-spacing:0.04em;}
+.logo b{color:var(--accent);font-weight:400;}
+.nav-mid{display:flex;align-items:center;gap:2px;}
+.nlink{padding:7px 13px;border-radius:8px;font-size:12px;color:var(--t2);transition:all 0.18s;}
+.nlink:hover{color:var(--text);background:rgba(255,255,255,0.04);}
+.nav-r{display:flex;align-items:center;gap:8px;}
+.nbtn{padding:7px 14px;border-radius:8px;border:0.5px solid var(--line);background:none;color:var(--t2);font-size:12px;font-family:inherit;cursor:pointer;transition:all 0.18s;}
+.nbtn:hover{color:var(--text);}
+.nbtn.hi{background:var(--accent);color:#09090B;border-color:var(--accent);font-weight:600;}
+
+.page-wrap{max-width:700px;margin:0 auto;padding:3rem 2rem 5rem;}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:400;margin-bottom:0.5rem;}
+.page-sub{font-size:13px;color:var(--t2);margin-bottom:2.5rem;}
+
+/* STEPPER */
+.stepper{display:flex;align-items:center;gap:0;margin-bottom:2.5rem;}
+.step{display:flex;align-items:center;gap:8px;}
+.step-num{width:28px;height:28px;border-radius:50%;border:0.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--t3);font-weight:600;transition:all 0.2s;}
+.step.on .step-num{background:var(--accent);color:#09090B;border-color:var(--accent);}
+.step.done .step-num{background:var(--adim);color:var(--accent);border-color:var(--aline);}
+.step-label{font-size:12px;color:var(--t3);}
+.step.on .step-label{color:var(--text);}
+.step.done .step-label{color:var(--t2);}
+.step-line{flex:1;height:0.5px;background:var(--line);margin:0 8px;}
+
+/* FORM CARD */
+.form-card{background:var(--card);border:0.5px solid var(--line);border-radius:14px;padding:2rem;margin-bottom:1.2rem;}
+.form-card h3{font-size:14px;font-weight:500;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:0.5px solid var(--line);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.form-row.full{grid-template-columns:1fr;}
+@media(max-width:500px){.form-row{grid-template-columns:1fr;}}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field label{font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--t3);}
+.field input,.field select,.field textarea{background:var(--sf);border:0.5px solid var(--line);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);font-family:inherit;outline:none;transition:border-color 0.18s;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--aline);}
+.field textarea{resize:vertical;min-height:100px;}
+.field select{appearance:none;}
+.field-hint{font-size:11px;color:var(--t3);margin-top:2px;}
+
+/* UPLOAD AREA */
+.upload-area{border:0.5px dashed var(--aline);border-radius:10px;padding:2rem;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--adim);}
+.upload-area:hover{border-color:var(--accent);}
+.upload-icon{font-size:2rem;margin-bottom:8px;}
+.upload-area p{font-size:13px;color:var(--t2);}
+.upload-area span{font-size:11px;color:var(--t3);}
+.preview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px;}
+.preview-item{aspect-ratio:1;background:var(--sf);border-radius:8px;border:0.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--t3);}
+
+/* AMENITIES */
+.amenity-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;}
+.amenity-btn{padding:8px 10px;border-radius:8px;border:0.5px solid var(--line);background:none;color:var(--t2);font-size:12px;font-family:inherit;cursor:pointer;transition:all 0.18s;text-align:center;}
+.amenity-btn.on,.amenity-btn:hover{border-color:var(--aline);background:var(--adim);color:var(--accent);}
+
+/* SUBMIT */
+.submit-row{display:flex;gap:12px;justify-content:flex-end;margin-top:1.5rem;}
+.btn-primary{padding:12px 28px;border-radius:10px;background:var(--accent);color:#09090B;font-size:13px;font-weight:600;font-family:inherit;border:none;cursor:pointer;transition:background 0.18s;}
+.btn-primary:hover{background:#cfa96e;}
+.btn-back{padding:12px 20px;border-radius:10px;background:none;color:var(--t2);font-size:13px;font-family:inherit;border:0.5px solid var(--line);cursor:pointer;transition:all 0.18s;}
+.btn-back:hover{color:var(--text);}
+
+/* STEPS */
+.step-content{display:none;}
+.step-content.show{display:block;}
+
+/* SUCCESS */
+.success-box{text-align:center;padding:4rem 2rem;}
+.success-icon{font-size:4rem;margin-bottom:1rem;}
+.success-box h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;margin-bottom:0.8rem;}
+.success-box p{font-size:13px;color:var(--t2);margin-bottom:2rem;line-height:1.8;}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html">On<b>●</b>earth</a>
+  <div class="nav-mid">
+    <a class="nlink" href="search.html">매물 검색</a>
+    <a class="nlink" href="country.html">국가별 탐색</a>
+    <a class="nlink" href="regulations.html">법규 안내</a>
+  </div>
+  <div class="nav-r">
+    <a class="nbtn" href="mypage.html">로그인</a>
+    <a class="nbtn hi" href="register.html">매물 등록</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-title">매물 등록</div>
+  <div class="page-sub">전 세계 바이어에게 내 매물을 소개하세요. 무료로 등록할 수 있습니다.</div>
+
+  <div class="stepper" id="stepper">
+    <div class="step on" id="s1"><div class="step-num">1</div><div class="step-label">기본 정보</div></div>
+    <div class="step-line"></div>
+    <div class="step" id="s2"><div class="step-num">2</div><div class="step-label">사진 · 시설</div></div>
+    <div class="step-line"></div>
+    <div class="step" id="s3"><div class="step-num">3</div><div class="step-label">가격 · 연락처</div></div>
+    <div class="step-line"></div>
+    <div class="step" id="s4"><div class="step-num">4</div><div class="step-label">완료</div></div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="step-content show" id="step1">
+    <div class="form-card">
+      <h3>📍 위치 정보</h3>
+      <div class="form-row">
+        <div class="field">
+          <label>국가 *</label>
+          <select required>
+            <option value="">선택하세요</option>
+            <option>🇺🇸 미국</option><option>🇯🇵 일본</option><option>🇦🇪 두바이 (UAE)</option>
+            <option>🇫🇷 프랑스</option><option>🇵🇹 포르투갈</option><option>🇮🇹 이탈리아</option>
+            <option>🇬🇧 영국</option><option>🇸🇬 싱가포르</option><option>🇹🇭 태국</option>
+            <option>🇵🇭 필리핀</option><option>🇦🇺 호주</option><option>🇰🇷 대한민국</option>
+            <option>🌺 하와이</option><option>기타</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>도시 *</label>
+          <input type="text" placeholder="예: 도쿄, 파리, 두바이">
+        </div>
+      </div>
+      <div class="form-row full">
+        <div class="field">
+          <label>상세 주소</label>
+          <input type="text" placeholder="도로명 또는 지역명">
+          <span class="field-hint">정확한 주소는 에이전트 연결 후 공개됩니다</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3>🏠 매물 정보</h3>
+      <div class="form-row">
+        <div class="field">
+          <label>매물 유형 *</label>
+          <select required>
+            <option value="">선택하세요</option>
+            <option>아파트 / 콘도</option><option>단독주택 / 빌라</option>
+            <option>펜트하우스</option><option>타운하우스</option>
+            <option>상업용 부동산</option><option>토지</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>거래 유형 *</label>
+          <select required>
+            <option value="">선택하세요</option>
+            <option>매매</option><option>임대 (장기)</option><option>임대 (단기)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>침실 수</label><select><option>스튜디오</option><option>1BR</option><option>2BR</option><option>3BR</option><option>4BR</option><option>5BR+</option></select></div>
+        <div class="field"><label>욕실 수</label><select><option>1</option><option>2</option><option>3</option><option>4+</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>전용 면적 (m²)</label><input type="number" placeholder="예: 85"></div>
+        <div class="field"><label>건축 연도</label><input type="number" placeholder="예: 2018"></div>
+      </div>
+      <div class="form-row full">
+        <div class="field">
+          <label>매물 제목 *</label>
+          <input type="text" placeholder="예: Shibuya Modern Studio with City View">
+        </div>
+      </div>
+      <div class="form-row full">
+        <div class="field">
+          <label>매물 설명</label>
+          <textarea placeholder="매물의 특징, 주변 환경, 투자 가치 등을 자유롭게 작성해주세요."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-row">
+      <button class="btn-primary" onclick="nextStep(2)">다음 단계 →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step-content" id="step2">
+    <div class="form-card">
+      <h3>📸 매물 사진</h3>
+      <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+        <div class="upload-icon">📁</div>
+        <p>사진을 드래그하거나 클릭해서 업로드</p>
+        <span>최대 20장 · JPG, PNG · 각 10MB 이하</span>
+        <input type="file" id="fileInput" multiple accept="image/*" style="display:none" onchange="previewImages(this)">
+      </div>
+      <div class="preview-grid" id="previewGrid"></div>
+    </div>
+
+    <div class="form-card">
+      <h3>✨ 시설 및 편의 사항</h3>
+      <div class="amenity-grid" id="amenityGrid">
+        <button class="amenity-btn" onclick="toggleAmenity(this)">🅿️ 주차장</button>
+        <button class="amenity-btn" onclick="toggleAmenity(this)">🏊 수영장</button>
+        <button class="amenity-btn" onclick="toggleAmenity(this)">🏋️ 헬스장</button>
+        <button class="amenity-btn" onclick="toggleAmenity(this)">🔒 보안·경비</button>
+        <button class="amenity-btn" onclick="toggleAmenity(this)">🌿 발코니</button>
+        <button class="amenity-btn" onclick="toggleAmenity(this)">🌊 오션뷰</button>
+        <button class="amenity-btn" onclick="toggleAmenity(this)">🏙️ 시티뷰</button>
+        <button class="amenity-btn" onclick="toggleAmenity(this)">🛗 엘리베이터</button>
+        <button class="amenity-btn" onclick="toggleAmenity(this)">❄️ 에어컨</button>
+        <button class="amenity-btn" onclick="toggleAmenity(this)">🔥 난방</button>
+        <button class="amenity-btn" onclick="toggleAmenity(this)">📡 인터넷</button>
+        <button class="amenity-btn" onclick="toggleAmenity(this)">🛋 풀퍼니시드</button>
+        <button class="amenity-btn" onclick="toggleAmenity(this)">🐾 반려동물</button>
+        <button class="amenity-btn" onclick="toggleAmenity(this)">☀️ 루프탑</button>
+        <button class="amenity-btn" onclick="toggleAmenity(this)">🏖️ 해변 근접</button>
+        <button class="amenity-btn" onclick="toggleAmenity(this)">🚇 지하철 근접</button>
+      </div>
+    </div>
+
+    <div class="submit-row">
+      <button class="btn-back" onclick="nextStep(1)">← 이전</button>
+      <button class="btn-primary" onclick="nextStep(3)">다음 단계 →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step-content" id="step3">
+    <div class="form-card">
+      <h3>💰 가격 정보</h3>
+      <div class="form-row">
+        <div class="field">
+          <label>통화</label>
+          <select>
+            <option>USD ($)</option><option>EUR (€)</option><option>JPY (¥)</option>
+            <option>AED (د.إ)</option><option>GBP (£)</option><option>SGD (S$)</option>
+            <option>AUD (A$)</option><option>THB (฿)</option><option>KRW (₩)</option>
+            <option>PHP (₱)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>매매가 / 임대가 *</label>
+          <input type="number" placeholder="예: 450000">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>관리비 (월)</label>
+          <input type="number" placeholder="있는 경우 입력">
+        </div>
+        <div class="field">
+          <label>협상 가능 여부</label>
+          <select><option>협상 가능</option><option>가격 고정</option></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3>📞 연락처 정보</h3>
+      <div class="form-row">
+        <div class="field">
+          <label>이름 *</label>
+          <input type="text" placeholder="담당자 이름">
+        </div>
+        <div class="field">
+          <label>이메일 *</label>
+          <input type="email" placeholder="example@email.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>연락처</label>
+          <input type="tel" placeholder="+82-10-0000-0000">
+        </div>
+        <div class="field">
+          <label>등록자 유형</label>
+          <select><option>개인 (집주인)</option><option>공인 에이전트</option><option>개발사</option></select>
+        </div>
+      </div>
+      <div class="form-row full">
+        <div class="field">
+          <label>추가 메시지</label>
+          <textarea placeholder="바이어에게 전달하고 싶은 내용 (선택사항)"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card" style="background:var(--adim);border-color:var(--aline);">
+      <div style="font-size:12px;color:var(--t2);line-height:1.8;">
+        📋 <strong style="color:var(--text);">등록 안내</strong><br>
+        매물 등록은 무료입니다. 제출 후 Onearth 팀의 검토를 거쳐 24시간 내 게시됩니다.
+        정확하지 않은 정보나 중복 등록은 삭제될 수 있습니다.
+        <label style="display:flex;align-items:center;gap:8px;margin-top:10px;cursor:pointer;">
+          <input type="checkbox" required style="accent-color:var(--accent);">
+          이용약관 및 개인정보처리방침에 동의합니다
+        </label>
+      </div>
+    </div>
+
+    <div class="submit-row">
+      <button class="btn-back" onclick="nextStep(2)">← 이전</button>
+      <button class="btn-primary" onclick="submitForm()">매물 등록 완료 ✓</button>
+    </div>
+  </div>
+
+  <!-- STEP 4 SUCCESS -->
+  <div class="step-content" id="step4">
+    <div class="success-box">
+      <div class="success-icon">🎉</div>
+      <h2>등록이 완료되었습니다!</h2>
+      <p>매물이 성공적으로 제출되었습니다.<br>Onearth 팀 검토 후 24시간 내에 게시됩니다.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a href="search.html" class="btn-primary" style="display:inline-block;padding:12px 24px;border-radius:10px;background:var(--accent);color:#09090B;font-size:13px;font-weight:600;">매물 탐색하기</a>
+        <a href="mypage.html" style="display:inline-block;padding:12px 24px;border-radius:10px;background:none;border:0.5px solid var(--line);color:var(--t2);font-size:13px;">내 매물 관리</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentStep = 1;
+function nextStep(n){
+  document.getElementById('step'+currentStep).classList.remove('show');
+  document.getElementById('s'+currentStep).classList.remove('on');
+  if(currentStep < n) document.getElementById('s'+currentStep).classList.add('done');
+  currentStep = n;
+  document.getElementById('step'+currentStep).classList.add('show');
+  document.getElementById('s'+currentStep).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function submitForm(){
+  nextStep(4);
+  document.getElementById('s3').classList.remove('on');
+  document.getElementById('s3').classList.add('done');
+  document.getElementById('s4').classList.add('done');
+}
+function toggleAmenity(btn){ btn.classList.toggle('on'); }
+function previewImages(input){
+  const grid = document.getElementById('previewGrid');
+  grid.innerHTML = '';
+  const files = Array.from(input.files).slice(0,20);
+  files.forEach(f=>{
+    const div = document.createElement('div');
+    div.className = 'preview-item';
+    const r = new FileReader();
+    r.onload = e => { div.style.backgroundImage=`url(${e.target.result})`;div.style.backgroundSize='cover';div.style.backgroundPosition='center';div.textContent=''; };
+    r.readAsDataURL(f);
+    grid.appendChild(div);
+  });
+}
+</script>
+</body>
+</html>

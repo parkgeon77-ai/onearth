@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>국가별 탐색 — Onearth</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#09090B;--sf:#111113;--card:#161618;--accent:#BFA06A;--adim:rgba(191,160,106,0.10);--aline:rgba(191,160,106,0.22);--text:#ECEAE4;--t2:#7A7872;--t3:#3C3A37;--line:rgba(255,255,255,0.06);}
+body{background:var(--bg);color:var(--text);font-family:'Pretendard','Apple SD Gothic Neo',sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(9,9,11,0.92);backdrop-filter:blur(24px);border-bottom:0.5px solid var(--line);}
+.logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;letter-spacing:0.04em;}
+.logo b{color:var(--accent);font-weight:400;}
+.nav-mid{display:flex;align-items:center;gap:2px;}
+.nlink{padding:7px 13px;border-radius:8px;font-size:12px;color:var(--t2);transition:all 0.18s;}
+.nlink:hover,.nlink.on{color:var(--text);background:rgba(255,255,255,0.04);}
+.nav-r{display:flex;align-items:center;gap:8px;}
+.nbtn{padding:7px 14px;border-radius:8px;border:0.5px solid var(--line);background:none;color:var(--t2);font-size:12px;font-family:inherit;cursor:pointer;transition:all 0.18s;}
+.nbtn:hover{color:var(--text);}
+.nbtn.hi{background:var(--accent);color:#09090B;border-color:var(--accent);font-weight:600;}
+
+/* HERO */
+.page-hero{padding:3rem 2rem 2rem;text-align:center;border-bottom:0.5px solid var(--line);}
+.eyebrow{font-size:11px;letter-spacing:0.14em;color:var(--accent);text-transform:uppercase;margin-bottom:1rem;}
+.page-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:400;margin-bottom:0.6rem;}
+.page-hero p{font-size:13px;color:var(--t2);}
+
+/* REGION TABS */
+.region-tabs{padding:1.5rem 2rem;border-bottom:0.5px solid var(--line);display:flex;gap:8px;overflow-x:auto;}
+.region-tabs::-webkit-scrollbar{height:3px;}
+.region-tabs::-webkit-scrollbar-thumb{background:var(--line);}
+.rtab{padding:7px 16px;border-radius:20px;font-size:12px;color:var(--t2);border:0.5px solid var(--line);cursor:pointer;transition:all 0.18s;white-space:nowrap;}
+.rtab:hover,.rtab.on{background:var(--adim);border-color:var(--aline);color:var(--accent);}
+
+/* COUNTRY HERO CARD */
+.country-hero{margin:2rem;border-radius:16px;background:var(--card);border:0.5px solid var(--line);overflow:hidden;}
+.ch-banner{height:180px;display:flex;align-items:center;justify-content:center;font-size:5rem;background:linear-gradient(135deg,#1a1a1e 0%,#222226 100%);position:relative;}
+.ch-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,var(--card) 100%);}
+.ch-info{padding:1.5rem 2rem 2rem;display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start;}
+.ch-name{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;margin-bottom:4px;}
+.ch-sub{font-size:13px;color:var(--t2);margin-bottom:1rem;}
+.ch-stats{display:flex;gap:1.5rem;flex-wrap:wrap;}
+.ch-stat{text-align:center;}
+.ch-stat-num{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--accent);}
+.ch-stat-label{font-size:10px;color:var(--t3);margin-top:2px;}
+.ch-actions{display:flex;flex-direction:column;gap:8px;}
+.btn-acc{padding:9px 18px;border-radius:9px;background:var(--accent);color:#09090B;font-size:12px;font-weight:600;font-family:inherit;border:none;cursor:pointer;text-align:center;}
+.btn-ghost{padding:9px 18px;border-radius:9px;background:none;color:var(--text);font-size:12px;font-family:inherit;border:0.5px solid var(--line);cursor:pointer;text-align:center;}
+.btn-ghost:hover{border-color:var(--aline);}
+
+/* QUICK REGS */
+.quick-regs{display:flex;gap:8px;flex-wrap:wrap;margin-top:1rem;}
+.qr-tag{padding:4px 12px;border-radius:20px;font-size:11px;}
+.qr-ok{background:rgba(107,207,127,0.1);color:#6BCF7F;border:0.5px solid rgba(107,207,127,0.2);}
+.qr-warn{background:rgba(255,165,0,0.1);color:#FFA500;border:0.5px solid rgba(255,165,0,0.2);}
+.qr-no{background:rgba(255,112,112,0.1);color:#FF7070;border:0.5px solid rgba(255,112,112,0.2);}
+
+/* SECTION */
+.section{padding:2rem;}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.2rem;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;}
+.sec-link{font-size:12px;color:var(--accent);}
+.sec-link:hover{text-decoration:underline;}
+
+/* PROP GRID */
+.prop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.prop-card{background:var(--card);border:0.5px solid var(--line);border-radius:12px;overflow:hidden;transition:all 0.2s;cursor:pointer;}
+.prop-card:hover{border-color:var(--aline);transform:translateY(-2px);}
+.pc-img{height:160px;background:var(--sf);display:flex;align-items:center;justify-content:center;font-size:2.6rem;position:relative;}
+.pc-badge{position:absolute;top:8px;left:8px;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:600;}
+.badge-new{background:var(--accent);color:#09090B;}
+.badge-hot{background:rgba(255,100,100,0.15);color:#FF7070;border:0.5px solid rgba(255,100,100,0.3);}
+.pc-body{padding:0.9rem 1rem 1rem;}
+.pc-price{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--accent);margin-bottom:3px;}
+.pc-name{font-size:12px;font-weight:500;margin-bottom:2px;}
+.pc-loc{font-size:11px;color:var(--t2);}
+.pc-meta{display:flex;gap:8px;margin-top:7px;padding-top:7px;border-top:0.5px solid var(--line);}
+.pc-meta span{font-size:11px;color:var(--t3);}
+
+/* ALL COUNTRIES GRID */
+.all-countries{padding:2rem;}
+.region-group{margin-bottom:2.5rem;}
+.rg-title{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--t3);margin-bottom:12px;padding-bottom:8px;border-bottom:0.5px solid var(--line);}
+.cc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+.cc-card{background:var(--card);border:0.5px solid var(--line);border-radius:10px;padding:1rem;text-align:center;cursor:pointer;transition:all 0.2s;}
+.cc-card:hover{border-color:var(--aline);background:var(--adim);}
+.cc-flag{font-size:2rem;margin-bottom:6px;}
+.cc-name{font-size:13px;font-weight:500;margin-bottom:2px;}
+.cc-count{font-size:11px;color:var(--t2);margin-bottom:5px;}
+.cc-status{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;}
+.cs-ok{background:rgba(107,207,127,0.1);color:#6BCF7F;}
+.cs-warn{background:rgba(255,165,0,0.1);color:#FFA500;}
+.cs-no{background:rgba(255,112,112,0.1);color:#FF7070;}
+
+footer{padding:2rem;border-top:0.5px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.fc{font-size:10px;color:var(--t3);}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html">On<b>●</b>earth</a>
+  <div class="nav-mid">
+    <a class="nlink" href="search.html">매물 검색</a>
+    <a class="nlink on" href="country.html">국가별 탐색</a>
+    <a class="nlink" href="regulations.html">법규 안내</a>
+  </div>
+  <div class="nav-r">
+    <a class="nbtn" href="mypage.html">로그인</a>
+    <a class="nbtn hi" href="register.html">매물 등록</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="eyebrow">🌍 전세계 부동산</div>
+  <h1>국가별로 탐색하기</h1>
+  <p>관심 있는 국가를 선택하면 매물·법규·시장 정보를 한눈에 확인할 수 있습니다.</p>
+</div>
+
+<div class="region-tabs">
+  <div class="rtab on" onclick="showRegion('all',this)">전체</div>
+  <div class="rtab" onclick="showRegion('americas',this)">🌎 아메리카</div>
+  <div class="rtab" onclick="showRegion('europe',this)">🌍 유럽</div>
+  <div class="rtab" onclick="showRegion('asia',this)">🌏 아시아</div>
+  <div class="rtab" onclick="showRegion('oceania',this)">🦘 오세아니아</div>
+  <div class="rtab" onclick="showRegion('middleeast',this)">🕌 중동</div>
+</div>
+
+<!-- ALL COUNTRIES -->
+<div class="all-countries" id="allCountries">
+
+  <div class="region-group" data-region="americas">
+    <div class="rg-title">🌎 아메리카</div>
+    <div class="cc-grid">
+      <a href="country.html?c=us" class="cc-card"><div class="cc-flag">🇺🇸</div><div class="cc-name">미국</div><div class="cc-count">286개 매물</div><span class="cc-status cs-ok">취득 자유</span></a>
+      <a href="country.html?c=us" class="cc-card"><div class="cc-flag">🌺</div><div class="cc-name">하와이</div><div class="cc-count">64개 매물</div><span class="cc-status cs-ok">취득 자유</span></a>
+      <a href="country.html?c=ca" class="cc-card"><div class="cc-flag">🇨🇦</div><div class="cc-name">캐나다</div><div class="cc-count">38개 매물</div><span class="cc-status cs-warn">외국인 제한</span></a>
+      <a href="country.html?c=mx" class="cc-card"><div class="cc-flag">🇲🇽</div><div class="cc-name">멕시코</div><div class="cc-count">22개 매물</div><span class="cc-status cs-warn">신탁 방식</span></a>
+    </div>
+  </div>
+
+  <div class="region-group" data-region="europe">
+    <div class="rg-title">🌍 유럽</div>
+    <div class="cc-grid">
+      <a href="country.html?c=fr" class="cc-card"><div class="cc-flag">🇫🇷</div><div class="cc-name">프랑스</div><div class="cc-count">142개 매물</div><span class="cc-status cs-ok">취득 자유</span></a>
+      <a href="country.html?c=pt" class="cc-card"><div class="cc-flag">🇵🇹</div><div class="cc-name">포르투갈</div><div class="cc-count">118개 매물</div><span class="cc-status cs-ok">황금비자</span></a>
+      <a href="country.html?c=it" class="cc-card"><div class="cc-flag">🇮🇹</div><div class="cc-name">이탈리아</div><div class="cc-count">61개 매물</div><span class="cc-status cs-ok">취득 자유</span></a>
+      <a href="country.html?c=gb" class="cc-card"><div class="cc-flag">🇬🇧</div><div class="cc-name">영국</div><div class="cc-count">68개 매물</div><span class="cc-status cs-ok">취득 자유</span></a>
+      <a href="country.html?c=es" class="cc-card"><div class="cc-flag">🇪🇸</div><div class="cc-name">스페인</div><div class="cc-count">54개 매물</div><span class="cc-status cs-ok">황금비자</span></a>
+      <a href="country.html?c=gr" class="cc-card"><div class="cc-flag">🇬🇷</div><div class="cc-name">그리스</div><div class="cc-count">41개 매물</div><span class="cc-status cs-ok">황금비자</span></a>
+      <a href="country.html?c=de" class="cc-card"><div class="cc-flag">🇩🇪</div><div class="cc-name">독일</div><div class="cc-count">33개 매물</div><span class="cc-status cs-ok">취득 자유</span></a>
+      <a href="country.html?c=ch" class="cc-card"><div class="cc-flag">🇨🇭</div><div class="cc-name">스위스</div><div class="cc-count">18개 매물</div><span class="cc-status cs-warn">제한 있음</span></a>
+    </div>
+  </div>
+
+  <div class="region-group" data-region="asia">
+    <div class="rg-title">🌏 아시아</div>
+    <div class="cc-grid">
+      <a href="country.html?c=jp" class="cc-card"><div class="cc-flag">🇯🇵</div><div class="cc-name">일본</div><div class="cc-count">193개 매물</div><span class="cc-status cs-ok">취득 자유</span></a>
+      <a href="country.html?c=kr" class="cc-card"><div class="cc-flag">🇰🇷</div><div class="cc-name">대한민국</div><div class="cc-count">48개 매물</div><span class="cc-status cs-ok">신고 후 가능</span></a>
+      <a href="country.html?c=kr" class="cc-card"><div class="cc-flag">🍊</div><div class="cc-name">제주도</div><div class="cc-count">26개 매물</div><span class="cc-status cs-ok">투자비자</span></a>
+      <a href="country.html?c=sg" class="cc-card"><div class="cc-flag">🇸🇬</div><div class="cc-name">싱가포르</div><div class="cc-count">84개 매물</div><span class="cc-status cs-warn">고세율</span></a>
+      <a href="country.html?c=th" class="cc-card"><div class="cc-flag">🇹🇭</div><div class="cc-name">태국</div><div class="cc-count">97개 매물</div><span class="cc-status cs-warn">콘도만</span></a>
+      <a href="country.html?c=ph" class="cc-card"><div class="cc-flag">🇵🇭</div><div class="cc-name">필리핀</div><div class="cc-count">53개 매물</div><span class="cc-status cs-warn">콘도만</span></a>
+      <a href="country.html?c=vn" class="cc-card"><div class="cc-flag">🇻🇳</div><div class="cc-name">베트남</div><div class="cc-count">29개 매물</div><span class="cc-status cs-warn">50년 리스</span></a>
+      <a href="country.html?c=id" class="cc-card"><div class="cc-flag">🇮🇩</div><div class="cc-name">인도네시아</div><div class="cc-count">24개 매물</div><span class="cc-status cs-no">토지 불가</span></a>
+    </div>
+  </div>
+
+  <div class="region-group" data-region="oceania">
+    <div class="rg-title">🦘 오세아니아</div>
+    <div class="cc-grid">
+      <a href="country.html?c=au" class="cc-card"><div class="cc-flag">🇦🇺</div><div class="cc-name">호주</div><div class="cc-count">76개 매물</div><span class="cc-status cs-warn">FIRB 승인</span></a>
+      <a href="country.html?c=nz" class="cc-card"><div class="cc-flag">🇳🇿</div><div class="cc-name">뉴질랜드</div><div class="cc-count">18개 매물</div><span class="cc-status cs-no">외국인 불가</span></a>
+    </div>
+  </div>
+
+  <div class="region-group" data-region="middleeast">
+    <div class="rg-title">🕌 중동</div>
+    <div class="cc-grid">
+      <a href="country.html?c=ae" class="cc-card"><div class="cc-flag">🇦🇪</div><div class="cc-name">두바이</div><div class="cc-count">174개 매물</div><span class="cc-status cs-ok">세금 0%</span></a>
+      <a href="country.html?c=sa" class="cc-card"><div class="cc-flag">🇸🇦</div><div class="cc-name">사우디</div><div class="cc-count">12개 매물</div><span class="cc-status cs-warn">제한 있음</span></a>
+      <a href="country.html?c=qa" class="cc-card"><div class="cc-flag">🇶🇦</div><div class="cc-name">카타르</div><div class="cc-count">9개 매물</div><span class="cc-status cs-warn">지정구역</span></a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <a class="logo" href="index.html">On<b>●</b>earth</a>
+  <div class="fc">© 2025 ONEARTH. 본 정보는 참고용이며 법적 효력이 없습니다.</div>
+</footer>
+
+<script>
+function showRegion(region, el){
+  document.querySelectorAll('.rtab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelectorAll('.region-group').forEach(g=>{
+    g.style.display = (region==='all' || g.dataset.region===region) ? '' : 'none';
+  });
+}
+const params = new URLSearchParams(location.search);
+const c = params.get('c');
+if(c){
+  const map={us:'americas',ca:'americas',mx:'americas',fr:'europe',pt:'europe',it:'europe',gb:'europe',es:'europe',gr:'europe',de:'europe',ch:'europe',jp:'asia',kr:'asia',sg:'asia',th:'asia',ph:'asia',vn:'asia',id:'asia',au:'oceania',nz:'oceania',ae:'middleeast',sa:'middleeast',qa:'middleeast'};
+  if(map[c]){
+    const tab = [...document.querySelectorAll('.rtab')].find(t=>t.getAttribute('onclick')&&t.getAttribute('onclick').includes("'"+map[c]+"'"));
+    if(tab) showRegion(map[c], tab);
+  }
+}
+</script>
+</body>
+</html>

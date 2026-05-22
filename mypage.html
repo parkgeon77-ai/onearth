@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>내 계정 — Onearth</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#09090B;--sf:#111113;--card:#161618;--accent:#BFA06A;--adim:rgba(191,160,106,0.10);--aline:rgba(191,160,106,0.22);--text:#ECEAE4;--t2:#7A7872;--t3:#3C3A37;--line:rgba(255,255,255,0.06);}
+body{background:var(--bg);color:var(--text);font-family:'Pretendard','Apple SD Gothic Neo',sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(9,9,11,0.92);backdrop-filter:blur(24px);border-bottom:0.5px solid var(--line);}
+.logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;letter-spacing:0.04em;}
+.logo b{color:var(--accent);font-weight:400;}
+.nav-mid{display:flex;align-items:center;gap:2px;}
+.nlink{padding:7px 13px;border-radius:8px;font-size:12px;color:var(--t2);transition:all 0.18s;}
+.nlink:hover{color:var(--text);background:rgba(255,255,255,0.04);}
+.nav-r{display:flex;align-items:center;gap:8px;}
+.nbtn{padding:7px 14px;border-radius:8px;border:0.5px solid var(--line);background:none;color:var(--t2);font-size:12px;font-family:inherit;cursor:pointer;transition:all 0.18s;}
+.nbtn:hover{color:var(--text);}
+.nbtn.hi{background:var(--accent);color:#09090B;border-color:var(--accent);font-weight:600;}
+
+/* AUTH GATE (shown when not logged in) */
+.auth-gate{max-width:420px;margin:6rem auto;padding:2rem;text-align:center;}
+.auth-gate .icon{font-size:3rem;margin-bottom:1.2rem;}
+.auth-gate h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;margin-bottom:0.6rem;}
+.auth-gate p{font-size:13px;color:var(--t2);margin-bottom:2rem;line-height:1.8;}
+.auth-tabs{display:flex;background:var(--sf);border:0.5px solid var(--line);border-radius:10px;padding:4px;margin-bottom:1.5rem;}
+.auth-tab{flex:1;padding:8px;border-radius:7px;font-size:13px;font-family:inherit;border:none;background:none;color:var(--t2);cursor:pointer;transition:all 0.18s;}
+.auth-tab.on{background:var(--card);color:var(--text);}
+.auth-form{background:var(--card);border:0.5px solid var(--line);border-radius:14px;padding:1.8rem;text-align:left;}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.field label{font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--t3);}
+.field input{background:var(--sf);border:0.5px solid var(--line);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--text);font-family:inherit;outline:none;}
+.field input:focus{border-color:var(--aline);}
+.btn-primary{width:100%;padding:12px;border-radius:10px;background:var(--accent);color:#09090B;font-size:13px;font-weight:600;font-family:inherit;border:none;cursor:pointer;transition:background 0.18s;margin-top:4px;}
+.btn-primary:hover{background:#cfa96e;}
+.divider{display:flex;align-items:center;gap:10px;margin:14px 0;}
+.divider::before,.divider::after{content:'';flex:1;height:0.5px;background:var(--line);}
+.divider span{font-size:11px;color:var(--t3);}
+.social-btn{width:100%;padding:10px;border-radius:9px;background:var(--sf);border:0.5px solid var(--line);color:var(--t2);font-size:13px;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.18s;margin-bottom:8px;}
+.social-btn:hover{color:var(--text);border-color:var(--aline);}
+
+/* DASHBOARD (shown when logged in) */
+.dashboard{display:none;max-width:1100px;margin:0 auto;padding:2rem;}
+.dash-header{display:grid;grid-template-columns:auto 1fr auto;gap:1.2rem;align-items:center;background:var(--card);border:0.5px solid var(--line);border-radius:14px;padding:1.5rem 2rem;margin-bottom:2rem;}
+.dash-avatar{width:52px;height:52px;border-radius:50%;background:var(--adim);border:0.5px solid var(--aline);display:flex;align-items:center;justify-content:center;font-size:1.8rem;}
+.dash-name{font-size:16px;font-weight:500;}
+.dash-email{font-size:12px;color:var(--t2);margin-top:2px;}
+.dash-stats{display:flex;gap:1.5rem;}
+.ds-item{text-align:center;}
+.ds-num{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--accent);}
+.ds-label{font-size:10px;color:var(--t3);}
+
+/* TABS */
+.dash-tabs{display:flex;gap:2px;margin-bottom:1.5rem;background:var(--sf);border:0.5px solid var(--line);border-radius:10px;padding:4px;width:fit-content;}
+.dtab{padding:8px 18px;border-radius:7px;font-size:13px;font-family:inherit;border:none;background:none;color:var(--t2);cursor:pointer;transition:all 0.18s;}
+.dtab.on{background:var(--card);color:var(--text);}
+
+/* LISTING CARDS */
+.listing-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
+.listing-card{background:var(--card);border:0.5px solid var(--line);border-radius:12px;overflow:hidden;}
+.lc-img{height:140px;background:var(--sf);display:flex;align-items:center;justify-content:center;font-size:2.4rem;position:relative;}
+.lc-status{position:absolute;top:8px;right:8px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;}
+.st-live{background:rgba(107,207,127,0.15);color:#6BCF7F;border:0.5px solid rgba(107,207,127,0.3);}
+.st-review{background:rgba(255,165,0,0.12);color:#FFA500;border:0.5px solid rgba(255,165,0,0.2);}
+.lc-body{padding:0.9rem 1rem;}
+.lc-price{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--accent);margin-bottom:2px;}
+.lc-name{font-size:12px;font-weight:500;margin-bottom:2px;}
+.lc-loc{font-size:11px;color:var(--t2);margin-bottom:8px;}
+.lc-actions{display:flex;gap:8px;}
+.lc-btn{flex:1;padding:6px;border-radius:7px;font-size:11px;font-family:inherit;cursor:pointer;border:0.5px solid var(--line);background:none;color:var(--t2);transition:all 0.18s;}
+.lc-btn:hover{color:var(--text);border-color:var(--aline);}
+.lc-btn.danger:hover{color:#FF7070;border-color:rgba(255,112,112,0.3);}
+
+/* SAVED */
+.saved-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
+.saved-card{background:var(--card);border:0.5px solid var(--line);border-radius:12px;padding:1rem;display:flex;gap:12px;align-items:center;}
+.saved-emoji{font-size:2rem;width:44px;height:44px;background:var(--sf);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.saved-info{flex:1;min-width:0;}
+.saved-price{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--accent);margin-bottom:1px;}
+.saved-name{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.saved-loc{font-size:11px;color:var(--t2);}
+.saved-rm{font-size:14px;cursor:pointer;color:var(--t3);transition:color 0.18s;}
+.saved-rm:hover{color:#FF7070;}
+
+/* MESSAGES */
+.msg-list{display:flex;flex-direction:column;gap:10px;}
+.msg-item{background:var(--card);border:0.5px solid var(--line);border-radius:12px;padding:1rem 1.2rem;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.18s;}
+.msg-item:hover{border-color:var(--aline);}
+.msg-item.unread{border-color:var(--aline);background:var(--adim);}
+.msg-avatar{width:36px;height:36px;border-radius:50%;background:var(--adim);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.msg-info{flex:1;min-width:0;}
+.msg-sender{font-size:13px;font-weight:500;margin-bottom:2px;}
+.msg-preview{font-size:12px;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.msg-time{font-size:11px;color:var(--t3);}
+.msg-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+
+/* ACCOUNT TAB */
+.account-form{background:var(--card);border:0.5px solid var(--line);border-radius:14px;padding:2rem;max-width:500px;}
+.account-form h3{font-size:14px;font-weight:500;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:0.5px solid var(--line);}
+.ac-field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.ac-field label{font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--t3);}
+.ac-field input{background:var(--sf);border:0.5px solid var(--line);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);font-family:inherit;outline:none;}
+.ac-field input:focus{border-color:var(--aline);}
+.save-btn{padding:10px 24px;border-radius:9px;background:var(--accent);color:#09090B;font-size:13px;font-weight:600;font-family:inherit;border:none;cursor:pointer;}
+
+.tab-content{display:none;}
+.tab-content.show{display:block;}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html">On<b>●</b>earth</a>
+  <div class="nav-mid">
+    <a class="nlink" href="search.html">매물 검색</a>
+    <a class="nlink" href="country.html">국가별 탐색</a>
+    <a class="nlink" href="regulations.html">법규 안내</a>
+  </div>
+  <div class="nav-r">
+    <a class="nbtn on" href="mypage.html">내 계정</a>
+    <a class="nbtn hi" href="register.html">매물 등록</a>
+  </div>
+</nav>
+
+<!-- AUTH GATE -->
+<div class="auth-gate" id="authGate">
+  <div class="icon">🔐</div>
+  <h2>로그인이 필요합니다</h2>
+  <p>내 매물 관리, 저장 목록, 메시지 기능을 이용하려면 로그인하세요.</p>
+  <div class="auth-tabs">
+    <button class="auth-tab on" onclick="switchAuth('login',this)">로그인</button>
+    <button class="auth-tab" onclick="switchAuth('signup',this)">회원가입</button>
+  </div>
+  <div class="auth-form">
+    <div id="loginForm">
+      <div class="field"><label>이메일</label><input type="email" placeholder="example@email.com"></div>
+      <div class="field"><label>비밀번호</label><input type="password" placeholder="••••••••"></div>
+      <button class="btn-primary" onclick="doLogin()">로그인</button>
+      <div class="divider"><span>또는</span></div>
+      <button class="social-btn">🇬 Google로 계속하기</button>
+      <button class="social-btn">🍎 Apple로 계속하기</button>
+    </div>
+    <div id="signupForm" style="display:none">
+      <div class="field"><label>이름</label><input type="text" placeholder="홍길동"></div>
+      <div class="field"><label>이메일</label><input type="email" placeholder="example@email.com"></div>
+      <div class="field"><label>비밀번호</label><input type="password" placeholder="8자 이상"></div>
+      <div class="field"><label>비밀번호 확인</label><input type="password" placeholder="비밀번호 재입력"></div>
+      <button class="btn-primary" onclick="doLogin()">회원가입</button>
+      <div class="divider"><span>또는</span></div>
+      <button class="social-btn">🇬 Google로 계속하기</button>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+  <div class="dash-header">
+    <div class="dash-avatar">🧑</div>
+    <div>
+      <div class="dash-name">김준혁</div>
+      <div class="dash-email">junhyeok@email.com</div>
+    </div>
+    <div class="dash-stats">
+      <div class="ds-item"><div class="ds-num">3</div><div class="ds-label">등록 매물</div></div>
+      <div class="ds-item"><div class="ds-num">12</div><div class="ds-label">저장 목록</div></div>
+      <div class="ds-item"><div class="ds-num">5</div><div class="ds-label">미읽 메시지</div></div>
+    </div>
+  </div>
+
+  <div class="dash-tabs">
+    <button class="dtab on" onclick="switchTab('listings',this)">내 매물</button>
+    <button class="dtab" onclick="switchTab('saved',this)">저장 목록</button>
+    <button class="dtab" onclick="switchTab('messages',this)">메시지</button>
+    <button class="dtab" onclick="switchTab('account',this)">계정 설정</button>
+  </div>
+
+  <!-- MY LISTINGS -->
+  <div class="tab-content show" id="tab-listings">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+      <div style="font-size:13px;color:var(--t2);">등록한 매물 <b style="color:var(--text)">3</b>건</div>
+      <a href="register.html" style="padding:8px 16px;border-radius:8px;background:var(--accent);color:#09090B;font-size:12px;font-weight:600;">+ 새 매물 등록</a>
+    </div>
+    <div class="listing-grid">
+      <div class="listing-card">
+        <div class="lc-img">🏙️<span class="lc-status st-live">게시 중</span></div>
+        <div class="lc-body">
+          <div class="lc-price">$2,400,000</div>
+          <div class="lc-name">Downtown Luxury Penthouse</div>
+          <div class="lc-loc">📍 뉴욕, 미국</div>
+          <div class="lc-actions">
+            <button class="lc-btn">수정</button>
+            <button class="lc-btn">통계</button>
+            <button class="lc-btn danger">삭제</button>
+          </div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="lc-img">⛩️<span class="lc-status st-live">게시 중</span></div>
+        <div class="lc-body">
+          <div class="lc-price">¥68,000,000</div>
+          <div class="lc-name">신주쿠 타워 레지던스</div>
+          <div class="lc-loc">📍 도쿄, 일본</div>
+          <div class="lc-actions">
+            <button class="lc-btn">수정</button>
+            <button class="lc-btn">통계</button>
+            <button class="lc-btn danger">삭제</button>
+          </div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="lc-img">🌴<span class="lc-status st-review">검토 중</span></div>
+        <div class="lc-body">
+          <div class="lc-price">AED 3,200,000</div>
+          <div class="lc-name">Palm Jumeirah Sea View</div>
+          <div class="lc-loc">📍 두바이, UAE</div>
+          <div class="lc-actions">
+            <button class="lc-btn">수정</button>
+            <button class="lc-btn">통계</button>
+            <button class="lc-btn danger">삭제</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAVED -->
+  <div class="tab-content" id="tab-saved">
+    <div style="margin-bottom:1rem;font-size:13px;color:var(--t2);">저장한 매물 <b style="color:var(--text)">12</b>건</div>
+    <div class="saved-grid">
+      <div class="saved-card"><div class="saved-emoji">🗼</div><div class="saved-info"><div class="saved-price">€1,850,000</div><div class="saved-name">Haussmann Boulevard Apt</div><div class="saved-loc">📍 파리, 프랑스</div></div><span class="saved-rm" onclick="this.closest('.saved-card').remove()">×</span></div>
+      <div class="saved-card"><div class="saved-emoji">🏖️</div><div class="saved-info"><div class="saved-price">€320,000</div><div class="saved-name">Algarve Beachfront Villa</div><div class="saved-loc">📍 파루, 포르투갈</div></div><span class="saved-rm" onclick="this.closest('.saved-card').remove()">×</span></div>
+      <div class="saved-card"><div class="saved-emoji">🌺</div><div class="saved-info"><div class="saved-price">$1,100,000</div><div class="saved-name">Waikiki Ocean View Condo</div><div class="saved-loc">📍 호놀룰루, 하와이</div></div><span class="saved-rm" onclick="this.closest('.saved-card').remove()">×</span></div>
+      <div class="saved-card"><div class="saved-emoji">🏰</div><div class="saved-info"><div class="saved-price">£1,950,000</div><div class="saved-name">Chelsea Townhouse</div><div class="saved-loc">📍 런던, 영국</div></div><span class="saved-rm" onclick="this.closest('.saved-card').remove()">×</span></div>
+      <div class="saved-card"><div class="saved-emoji">🍕</div><div class="saved-info"><div class="saved-price">€480,000</div><div class="saved-name">Trastevere Historic Apt</div><div class="saved-loc">📍 로마, 이탈리아</div></div><span class="saved-rm" onclick="this.closest('.saved-card').remove()">×</span></div>
+      <div class="saved-card"><div class="saved-emoji">🌊</div><div class="saved-info"><div class="saved-price">AUD 1,200,000</div><div class="saved-name">Bondi Beach Apartment</div><div class="saved-loc">📍 시드니, 호주</div></div><span class="saved-rm" onclick="this.closest('.saved-card').remove()">×</span></div>
+    </div>
+  </div>
+
+  <!-- MESSAGES -->
+  <div class="tab-content" id="tab-messages">
+    <div style="margin-bottom:1rem;font-size:13px;color:var(--t2);">메시지 <b style="color:var(--text)">8</b>건 · 미읽 <b style="color:var(--accent)">5</b>건</div>
+    <div class="msg-list">
+      <div class="msg-item unread"><div class="msg-avatar">🧑</div><div class="msg-info"><div class="msg-sender">Yamamoto Kenji (도쿄 에이전트)</div><div class="msg-preview">신주쿠 레지던스 관련 추가 서류를 보내드렸습니다. 확인 부탁드립니다.</div></div><div><div class="msg-time">방금 전</div></div><div class="msg-dot"></div></div>
+      <div class="msg-item unread"><div class="msg-avatar">👩</div><div class="msg-info"><div class="msg-sender">Sophie Moreau (파리 에이전트)</div><div class="msg-preview">Haussmann 아파트 방문 일정을 확정해 주시겠어요?</div></div><div><div class="msg-time">1시간 전</div></div><div class="msg-dot"></div></div>
+      <div class="msg-item unread"><div class="msg-avatar">🧔</div><div class="msg-info"><div class="msg-sender">Ahmed Al-Rashid (두바이)</div><div class="msg-preview">Palm 유닛의 DLD 등록 절차를 안내해 드리겠습니다.</div></div><div><div class="msg-time">3시간 전</div></div><div class="msg-dot"></div></div>
+      <div class="msg-item"><div class="msg-avatar">👨</div><div class="msg-info"><div class="msg-sender">Carlos Fernandez (리스본)</div><div class="msg-preview">Algarve 빌라 계약서 초안을 첨부했습니다.</div></div><div><div class="msg-time">어제</div></div></div>
+      <div class="msg-item"><div class="msg-avatar">👱</div><div class="msg-info"><div class="msg-sender">James Wilson (런던)</div><div class="msg-preview">Chelsea 타운하우스 가격 협상 결과를 알려드립니다.</div></div><div><div class="msg-time">2일 전</div></div></div>
+    </div>
+  </div>
+
+  <!-- ACCOUNT -->
+  <div class="tab-content" id="tab-account">
+    <div class="account-form">
+      <h3>프로필 수정</h3>
+      <div class="ac-field"><label>이름</label><input type="text" value="김준혁"></div>
+      <div class="ac-field"><label>이메일</label><input type="email" value="junhyeok@email.com"></div>
+      <div class="ac-field"><label>연락처</label><input type="tel" value="+82-10-1234-5678"></div>
+      <div class="ac-field"><label>거주 국가</label><input type="text" value="대한민국"></div>
+      <button class="save-btn">변경 저장</button>
+    </div>
+    <br>
+    <div class="account-form">
+      <h3>비밀번호 변경</h3>
+      <div class="ac-field"><label>현재 비밀번호</label><input type="password" placeholder="••••••••"></div>
+      <div class="ac-field"><label>새 비밀번호</label><input type="password" placeholder="8자 이상"></div>
+      <div class="ac-field"><label>새 비밀번호 확인</label><input type="password" placeholder="재입력"></div>
+      <button class="save-btn">비밀번호 변경</button>
+    </div>
+    <div style="margin-top:1.5rem;padding:1rem;border:0.5px solid rgba(255,112,112,0.2);border-radius:10px;background:rgba(255,112,112,0.05);">
+      <div style="font-size:13px;color:#FF7070;margin-bottom:8px;">위험 구역</div>
+      <button onclick="doLogout()" style="padding:8px 16px;border-radius:8px;background:none;border:0.5px solid rgba(255,112,112,0.3);color:#FF7070;font-size:12px;font-family:inherit;cursor:pointer;">로그아웃</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchAuth(mode, el){
+  document.querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('loginForm').style.display = mode==='login' ? '' : 'none';
+  document.getElementById('signupForm').style.display = mode==='signup' ? '' : 'none';
+}
+function doLogin(){
+  document.getElementById('authGate').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+}
+function doLogout(){
+  document.getElementById('authGate').style.display = '';
+  document.getElementById('dashboard').style.display = 'none';
+}
+function switchTab(name, el){
+  document.querySelectorAll('.dtab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('show'));
+  document.getElementById('tab-'+name).classList.add('show');
+}
+</script>
+</body>
+</html>

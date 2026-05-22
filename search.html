@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>매물 검색 — Onearth</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#09090B;--sf:#111113;--card:#161618;--accent:#BFA06A;--adim:rgba(191,160,106,0.10);--aline:rgba(191,160,106,0.22);--text:#ECEAE4;--t2:#7A7872;--t3:#3C3A37;--line:rgba(255,255,255,0.06);}
+body{background:var(--bg);color:var(--text);font-family:'Pretendard','Apple SD Gothic Neo',sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(9,9,11,0.92);backdrop-filter:blur(24px);border-bottom:0.5px solid var(--line);}
+.logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;letter-spacing:0.04em;}
+.logo b{color:var(--accent);font-weight:400;}
+.nav-mid{display:flex;align-items:center;gap:2px;}
+.nlink{padding:7px 13px;border-radius:8px;font-size:12px;color:var(--t2);transition:all 0.18s;}
+.nlink:hover,.nlink.on{color:var(--text);background:rgba(255,255,255,0.04);}
+.nav-r{display:flex;align-items:center;gap:8px;}
+.nbtn{padding:7px 14px;border-radius:8px;border:0.5px solid var(--line);background:none;color:var(--t2);font-size:12px;font-family:inherit;cursor:pointer;transition:all 0.18s;}
+.nbtn:hover{color:var(--text);}
+.nbtn.hi{background:var(--accent);color:#09090B;border-color:var(--accent);font-weight:600;}
+
+/* PAGE HEADER */
+.page-header{padding:2.5rem 2rem 1.5rem;border-bottom:0.5px solid var(--line);}
+.page-header h1{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;margin-bottom:4px;}
+.page-header p{font-size:13px;color:var(--t2);}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:240px 1fr;gap:0;min-height:calc(100vh - 120px);}
+@media(max-width:900px){.layout{grid-template-columns:1fr;}}
+
+/* FILTER PANEL */
+.filter-panel{background:var(--sf);border-right:0.5px solid var(--line);padding:1.5rem;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;}
+.filter-section{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:0.5px solid var(--line);}
+.filter-section:last-child{border-bottom:none;}
+.fs-title{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--t3);margin-bottom:10px;}
+.filter-label{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--t2);cursor:pointer;margin-bottom:8px;transition:color 0.18s;}
+.filter-label:hover{color:var(--text);}
+.filter-label input[type=checkbox]{accent-color:var(--accent);}
+.filter-select{width:100%;background:var(--card);border:0.5px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:inherit;outline:none;appearance:none;margin-bottom:6px;}
+.filter-select:focus{border-color:var(--aline);}
+.range-row{display:flex;gap:8px;align-items:center;}
+.range-input{flex:1;background:var(--card);border:0.5px solid var(--line);border-radius:8px;padding:8px;font-size:12px;color:var(--text);font-family:inherit;outline:none;width:100%;}
+.range-input:focus{border-color:var(--aline);}
+.filter-reset{width:100%;padding:9px;border-radius:8px;background:none;border:0.5px solid var(--line);color:var(--t2);font-size:12px;font-family:inherit;cursor:pointer;transition:all 0.18s;margin-top:4px;}
+.filter-reset:hover{color:var(--text);border-color:var(--aline);}
+
+/* RESULTS AREA */
+.results-area{padding:1.5rem 2rem;}
+.results-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:10px;}
+.rt-count{font-size:13px;color:var(--t2);}
+.rt-count b{color:var(--text);}
+.rt-sort{display:flex;align-items:center;gap:8px;}
+.rt-sort label{font-size:12px;color:var(--t3);}
+.sort-select{background:var(--card);border:0.5px solid var(--line);border-radius:8px;padding:7px 10px;font-size:12px;color:var(--text);font-family:inherit;outline:none;appearance:none;}
+.view-toggle{display:flex;gap:4px;}
+.vt-btn{width:32px;height:32px;border-radius:7px;background:none;border:0.5px solid var(--line);color:var(--t2);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all 0.18s;}
+.vt-btn.on,.vt-btn:hover{background:var(--adim);border-color:var(--aline);color:var(--accent);}
+
+/* PROP GRID */
+.prop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;}
+.prop-grid.list-view{grid-template-columns:1fr;}
+.prop-card{background:var(--card);border:0.5px solid var(--line);border-radius:12px;overflow:hidden;transition:all 0.22s;cursor:pointer;}
+.prop-card:hover{border-color:var(--aline);transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,0.35);}
+.pc-img{height:180px;background:var(--sf);position:relative;}
+.list-view .pc-img{height:140px;}
+.pc-img-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.8rem;color:var(--t3);}
+.pc-badge{position:absolute;top:10px;left:10px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:0.05em;}
+.badge-new{background:var(--accent);color:#09090B;}
+.badge-hot{background:rgba(255,100,100,0.15);color:#FF7070;border:0.5px solid rgba(255,100,100,0.3);}
+.badge-rent{background:rgba(100,180,255,0.12);color:#7EC8F0;border:0.5px solid rgba(100,180,255,0.2);}
+.pc-fav{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;background:rgba(9,9,11,0.7);display:flex;align-items:center;justify-content:center;font-size:12px;backdrop-filter:blur(8px);transition:all 0.18s;}
+.pc-fav:hover{background:rgba(191,160,106,0.2);}
+.pc-body{padding:0.9rem 1.1rem 1.1rem;}
+.pc-price{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:var(--accent);margin-bottom:3px;}
+.pc-name{font-size:13px;font-weight:500;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pc-loc{font-size:11px;color:var(--t2);}
+.pc-meta{display:flex;gap:10px;margin-top:8px;padding-top:8px;border-top:0.5px solid var(--line);}
+.pc-meta span{font-size:11px;color:var(--t3);}
+.pc-contact{display:inline-block;margin-top:8px;padding:6px 14px;border-radius:7px;background:var(--adim);border:0.5px solid var(--aline);color:var(--accent);font-size:11px;transition:all 0.18s;}
+.pc-contact:hover{background:var(--accent);color:#09090B;}
+
+/* PAGINATION */
+.pagination{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:2.5rem;}
+.pg-btn{width:36px;height:36px;border-radius:8px;background:var(--card);border:0.5px solid var(--line);color:var(--t2);font-size:13px;font-family:inherit;cursor:pointer;transition:all 0.18s;display:flex;align-items:center;justify-content:center;}
+.pg-btn:hover,.pg-btn.on{background:var(--adim);border-color:var(--aline);color:var(--accent);}
+
+/* MOBILE FILTER TOGGLE */
+.mobile-filter-btn{display:none;padding:9px 16px;border-radius:8px;border:0.5px solid var(--line);background:none;color:var(--text);font-size:12px;font-family:inherit;cursor:pointer;}
+@media(max-width:900px){.filter-panel{display:none;}.mobile-filter-btn{display:block;}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html">On<b>●</b>earth</a>
+  <div class="nav-mid">
+    <a class="nlink on" href="search.html">매물 검색</a>
+    <a class="nlink" href="country.html">국가별 탐색</a>
+    <a class="nlink" href="regulations.html">법규 안내</a>
+  </div>
+  <div class="nav-r">
+    <a class="nbtn" href="mypage.html">로그인</a>
+    <a class="nbtn hi" href="register.html">매물 등록</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>전세계 매물 검색</h1>
+  <p>18개국 2,400개 이상의 프리미엄 부동산을 탐색하세요</p>
+</div>
+
+<div class="layout">
+  <!-- FILTER -->
+  <div class="filter-panel">
+    <div class="filter-section">
+      <div class="fs-title">국가</div>
+      <label class="filter-label"><input type="checkbox" checked> 🇺🇸 미국 <span style="margin-left:auto;font-size:11px;color:var(--t3)">286</span></label>
+      <label class="filter-label"><input type="checkbox"> 🇯🇵 일본 <span style="margin-left:auto;font-size:11px;color:var(--t3)">193</span></label>
+      <label class="filter-label"><input type="checkbox"> 🇦🇪 두바이 <span style="margin-left:auto;font-size:11px;color:var(--t3)">174</span></label>
+      <label class="filter-label"><input type="checkbox"> 🇫🇷 프랑스 <span style="margin-left:auto;font-size:11px;color:var(--t3)">142</span></label>
+      <label class="filter-label"><input type="checkbox"> 🇵🇹 포르투갈 <span style="margin-left:auto;font-size:11px;color:var(--t3)">118</span></label>
+      <label class="filter-label"><input type="checkbox"> 🇹🇭 태국 <span style="margin-left:auto;font-size:11px;color:var(--t3)">97</span></label>
+      <label class="filter-label"><input type="checkbox"> 🇸🇬 싱가포르 <span style="margin-left:auto;font-size:11px;color:var(--t3)">84</span></label>
+      <label class="filter-label"><input type="checkbox"> 🇦🇺 호주 <span style="margin-left:auto;font-size:11px;color:var(--t3)">76</span></label>
+      <label class="filter-label"><input type="checkbox"> 🇬🇧 영국 <span style="margin-left:auto;font-size:11px;color:var(--t3)">68</span></label>
+      <label class="filter-label"><input type="checkbox"> 🇮🇹 이탈리아 <span style="margin-left:auto;font-size:11px;color:var(--t3)">61</span></label>
+    </div>
+    <div class="filter-section">
+      <div class="fs-title">매물 유형</div>
+      <label class="filter-label"><input type="checkbox" checked> 아파트 / 콘도</label>
+      <label class="filter-label"><input type="checkbox" checked> 단독주택 / 빌라</label>
+      <label class="filter-label"><input type="checkbox"> 펜트하우스</label>
+      <label class="filter-label"><input type="checkbox"> 상업용 부동산</label>
+      <label class="filter-label"><input type="checkbox"> 토지</label>
+    </div>
+    <div class="filter-section">
+      <div class="fs-title">거래 유형</div>
+      <label class="filter-label"><input type="checkbox" checked> 매매</label>
+      <label class="filter-label"><input type="checkbox"> 임대</label>
+    </div>
+    <div class="filter-section">
+      <div class="fs-title">예산 (USD)</div>
+      <div class="range-row">
+        <input class="range-input" type="text" placeholder="최소">
+        <span style="color:var(--t3);font-size:12px;">~</span>
+        <input class="range-input" type="text" placeholder="최대">
+      </div>
+    </div>
+    <div class="filter-section">
+      <div class="fs-title">침실 수</div>
+      <select class="filter-select">
+        <option>전체</option>
+        <option>1 BR</option>
+        <option>2 BR</option>
+        <option>3 BR</option>
+        <option>4 BR 이상</option>
+      </select>
+    </div>
+    <div class="filter-section">
+      <div class="fs-title">외국인 취득</div>
+      <label class="filter-label"><input type="checkbox"> 취득 자유 국가만</label>
+      <label class="filter-label"><input type="checkbox"> 투자비자 가능</label>
+    </div>
+    <button class="filter-reset" onclick="resetFilters()">필터 초기화</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-area">
+    <div class="results-toolbar">
+      <div class="rt-count"><b id="count">24</b>개 매물</div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button class="mobile-filter-btn">🔧 필터</button>
+        <div class="rt-sort">
+          <label>정렬</label>
+          <select class="sort-select" onchange="sortListings(this.value)">
+            <option value="newest">최신순</option>
+            <option value="price_asc">가격 낮은순</option>
+            <option value="price_desc">가격 높은순</option>
+            <option value="popular">인기순</option>
+          </select>
+        </div>
+        <div class="view-toggle">
+          <button class="vt-btn on" id="grid-btn" onclick="setView('grid')" title="그리드">⊞</button>
+          <button class="vt-btn" id="list-btn" onclick="setView('list')" title="리스트">≡</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="prop-grid" id="propGrid">
+      <!-- Cards rendered by JS -->
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+  </div>
+</div>
+
+<script>
+const listings = [
+  {id:1,emoji:'🏙️',price:'$2,400,000',name:'Downtown Luxury Penthouse',loc:'뉴욕, 미국',br:3,ba:2,sqm:185,badge:'NEW',type:'아파트'},
+  {id:2,emoji:'⛩️',price:'¥68,000,000',name:'신주쿠 타워 레지던스',loc:'도쿄, 일본',br:2,ba:1,sqm:72,badge:'HOT',type:'아파트'},
+  {id:3,emoji:'🌴',price:'AED 3,200,000',name:'Palm Jumeirah Sea View',loc:'두바이, UAE',br:4,ba:3,sqm:240,badge:'NEW',type:'빌라'},
+  {id:4,emoji:'🗼',price:'€1,850,000',name:'Haussmann Boulevard Apt',loc:'파리, 프랑스',br:3,ba:2,sqm:130,badge:'',type:'아파트'},
+  {id:5,emoji:'🏖️',price:'€320,000',name:'Algarve Beachfront Villa',loc:'파루, 포르투갈',br:4,ba:3,sqm:220,badge:'임대',type:'빌라'},
+  {id:6,emoji:'🌺',price:'$1,100,000',name:'Waikiki Ocean View Condo',loc:'호놀룰루, 하와이',br:2,ba:2,sqm:95,badge:'HOT',type:'아파트'},
+  {id:7,emoji:'🏯',price:'¥45,000,000',name:'교토 마치야 타운하우스',loc:'교토, 일본',br:3,ba:2,sqm:110,badge:'',type:'단독주택'},
+  {id:8,emoji:'🌆',price:'SGD 2,800,000',name:'Marina Bay View Condo',loc:'싱가포르',br:2,ba:2,sqm:88,badge:'NEW',type:'아파트'},
+  {id:9,emoji:'🌊',price:'AUD 1,200,000',name:'Bondi Beach Apartment',loc:'시드니, 호주',br:2,ba:1,sqm:78,badge:'',type:'아파트'},
+  {id:10,emoji:'🏰',price:'£1,950,000',name:'Chelsea Townhouse',loc:'런던, 영국',br:4,ba:3,sqm:210,badge:'HOT',type:'단독주택'},
+  {id:11,emoji:'🍕',price:'€480,000',name:'Trastevere Historic Apt',loc:'로마, 이탈리아',br:2,ba:1,sqm:85,badge:'',type:'아파트'},
+  {id:12,emoji:'🏝️',price:'THB 8,500,000',name:'Koh Samui Pool Villa',loc:'사무이, 태국',br:3,ba:3,sqm:320,badge:'NEW',type:'빌라'},
+  {id:13,emoji:'🌃',price:'$890,000',name:'Beverly Hills Modern Home',loc:'LA, 미국',br:3,ba:2,sqm:160,badge:'',type:'단독주택'},
+  {id:14,emoji:'🗽',price:'$3,600,000',name:'Tribeca Loft Penthouse',loc:'뉴욕, 미국',br:4,ba:3,sqm:290,badge:'HOT',type:'아파트'},
+  {id:15,emoji:'🌸',price:'¥120,000,000',name:'롯폰기 프레스티지 레지던스',loc:'도쿄, 일본',br:3,ba:2,sqm:145,badge:'',type:'아파트'},
+  {id:16,emoji:'🏜️',price:'AED 1,800,000',name:'Downtown Dubai Studio+',loc:'두바이, UAE',br:1,ba:1,sqm:65,badge:'임대',type:'아파트'},
+  {id:17,emoji:'🌿',price:'€290,000',name:'Porto Riverside Apartment',loc:'포르투, 포르투갈',br:2,ba:1,sqm:90,badge:'NEW',type:'아파트'},
+  {id:18,emoji:'⛵',price:'€2,200,000',name:'Côte d\'Azur Seafront Villa',loc:'니스, 프랑스',br:5,ba:4,sqm:380,badge:'',type:'빌라'},
+  {id:19,emoji:'🌏',price:'PHP 12,000,000',name:'BGC Luxury Condo',loc:'마닐라, 필리핀',br:2,ba:2,sqm:98,badge:'HOT',type:'아파트'},
+  {id:20,emoji:'🍊',price:'₩850,000,000',name:'제주 서귀포 오션뷰',loc:'제주도, 한국',br:3,ba:2,sqm:120,badge:'NEW',type:'단독주택'},
+  {id:21,emoji:'🏔️',price:'AUD 2,400,000',name:'Sydney Harbour House',loc:'시드니, 호주',br:4,ba:3,sqm:280,badge:'',type:'단독주택'},
+  {id:22,emoji:'🎪',price:'€670,000',name:'Barcelona Eixample Flat',loc:'바르셀로나, 스페인',br:3,ba:2,sqm:115,badge:'HOT',type:'아파트'},
+  {id:23,emoji:'🏟️',price:'SGD 5,200,000',name:'Sentosa Cove Villa',loc:'싱가포르',br:5,ba:4,sqm:460,badge:'',type:'빌라'},
+  {id:24,emoji:'🌙',price:'AED 920,000',name:'JBR Walk Studio',loc:'두바이, UAE',br:1,ba:1,sqm:48,badge:'임대',type:'아파트'},
+];
+
+let currentPage = 1;
+const perPage = 12;
+let viewMode = 'grid';
+
+function badgeClass(b){
+  if(b==='NEW') return 'badge-new';
+  if(b==='HOT') return 'badge-hot';
+  if(b==='임대') return 'badge-rent';
+  return '';
+}
+
+function renderCards(){
+  const grid = document.getElementById('propGrid');
+  const start = (currentPage-1)*perPage;
+  const items = listings.slice(start, start+perPage);
+  grid.className = 'prop-grid' + (viewMode==='list' ? ' list-view' : '');
+  grid.innerHTML = items.map(p=>`
+    <a href="#" class="prop-card">
+      <div class="pc-img">
+        <div class="pc-img-inner">${p.emoji}</div>
+        ${p.badge ? `<span class="pc-badge ${badgeClass(p.badge)}">${p.badge}</span>` : ''}
+        <div class="pc-fav">♡</div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-price">${p.price}</div>
+        <div class="pc-name">${p.name}</div>
+        <div class="pc-loc">📍 ${p.loc}</div>
+        <div class="pc-meta">
+          <span>🛏 ${p.br}BR</span><span>🚿 ${p.ba}BA</span><span>📐 ${p.sqm}m²</span>
+        </div>
+        <span class="pc-contact">문의하기</span>
+      </div>
+    </a>
+  `).join('');
+  renderPagination();
+}
+
+function renderPagination(){
+  const total = Math.ceil(listings.length / perPage);
+  const pg = document.getElementById('pagination');
+  let html = `<button class="pg-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹</button>`;
+  for(let i=1;i<=total;i++){
+    html += `<button class="pg-btn ${i===currentPage?'on':''}" onclick="goPage(${i})">${i}</button>`;
+  }
+  html += `<button class="pg-btn" onclick="goPage(${currentPage+1})" ${currentPage===total?'disabled':''}>›</button>`;
+  pg.innerHTML = html;
+}
+
+function goPage(n){
+  const total = Math.ceil(listings.length / perPage);
+  if(n<1||n>total) return;
+  currentPage = n;
+  renderCards();
+  document.querySelector('.results-area').scrollIntoView({behavior:'smooth'});
+}
+
+function setView(mode){
+  viewMode = mode;
+  document.getElementById('grid-btn').classList.toggle('on', mode==='grid');
+  document.getElementById('list-btn').classList.toggle('on', mode==='list');
+  renderCards();
+}
+
+function sortListings(val){
+  if(val==='price_asc') listings.sort((a,b)=>parseFloat(a.price.replace(/[^0-9.]/g,''))-parseFloat(b.price.replace(/[^0-9.]/g,'')));
+  else if(val==='price_desc') listings.sort((a,b)=>parseFloat(b.price.replace(/[^0-9.]/g,''))-parseFloat(a.price.replace(/[^0-9.]/g,'')));
+  else if(val==='newest') listings.sort((a,b)=>b.id-a.id);
+  currentPage=1;
+  renderCards();
+}
+
+function resetFilters(){
+  document.querySelectorAll('.filter-panel input[type=checkbox]').forEach(cb=>cb.checked=false);
+}
+
+document.getElementById('count').textContent = listings.length;
+renderCards();
+</script>
+</body>
+</html>

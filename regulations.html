@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>국가별 법규 안내 — Onearth</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#09090B;--sf:#111113;--card:#161618;--accent:#BFA06A;--adim:rgba(191,160,106,0.11);--aline:rgba(191,160,106,0.22);--text:#ECEAE4;--t2:#7A7872;--t3:#3C3A37;--line:rgba(255,255,255,0.06);}
+body{background:var(--bg);color:var(--text);font-family:'Pretendard','Apple SD Gothic Neo',sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+nav{position:sticky;top:0;z-index:50;height:60px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(9,9,11,0.92);backdrop-filter:blur(24px);border-bottom:0.5px solid var(--line);}
+.logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;letter-spacing:0.04em;}
+.logo b{color:var(--accent);font-weight:400;}
+.nav-mid{display:flex;align-items:center;gap:2px;}
+.nlink{padding:7px 13px;border-radius:8px;font-size:12px;color:var(--t2);transition:all 0.18s;}
+.nlink:hover,.nlink.on{color:var(--text);background:rgba(255,255,255,0.04);}
+.nav-r{display:flex;align-items:center;gap:8px;}
+.nbtn{padding:7px 14px;border-radius:8px;border:0.5px solid var(--line);background:none;color:var(--t2);font-size:12px;font-family:inherit;cursor:pointer;transition:all 0.18s;}
+.nbtn:hover{color:var(--text);}
+.nbtn.hi{background:var(--accent);color:#09090B;border-color:var(--accent);font-weight:600;}
+.hero{padding:48px 2rem 36px;border-bottom:0.5px solid var(--line);text-align:center;}
+.eyebrow{font-size:11px;letter-spacing:0.14em;color:var(--accent);text-transform:uppercase;margin-bottom:1.2rem;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:400;margin-bottom:0.8rem;}
+.hero p{font-size:13px;color:var(--t2);max-width:480px;margin:0 auto;line-height:1.8;}
+.disclaimer{background:var(--adim);border:0.5px solid var(--aline);border-radius:10px;padding:1rem 1.5rem;font-size:12px;color:var(--t2);line-height:1.7;margin:1.5rem 2rem;}
+.layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 200px);}
+@media(max-width:768px){.layout{grid-template-columns:1fr;}.side-nav{display:none;}}
+.side-nav{background:var(--sf);border-right:0.5px solid var(--line);padding:1.5rem 1rem;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;}
+.sn-section{margin-bottom:1.5rem;}
+.sn-title{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--t3);margin-bottom:8px;padding:0 8px;}
+.sn-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;font-size:13px;color:var(--t2);cursor:pointer;transition:all 0.18s;margin-bottom:2px;}
+.sn-item:hover{background:rgba(255,255,255,0.04);color:var(--text);}
+.sn-item.on{background:var(--adim);color:var(--accent);}
+.sn-flag{font-size:15px;}
+.content{padding:2rem;}
+.country-section{margin-bottom:2.5rem;scroll-margin-top:80px;}
+.cs-header{display:flex;align-items:center;gap:14px;margin-bottom:1.2rem;padding-bottom:1rem;border-bottom:0.5px solid var(--line);}
+.cs-flag{font-size:2.4rem;}
+.cs-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:400;}
+.cs-meta{font-size:12px;color:var(--t3);margin-top:2px;}
+.cs-link{margin-left:auto;font-size:12px;color:var(--accent);white-space:nowrap;}
+.cs-link:hover{text-decoration:underline;}
+.reg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:1rem;}
+.reg-item{background:var(--card);border:0.5px solid var(--line);border-radius:10px;padding:1rem;}
+.ri-label{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--t3);margin-bottom:5px;}
+.ri-val{font-size:12px;line-height:1.6;color:var(--t2);}
+.ri-tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;margin-top:5px;}
+.tag-ok{background:rgba(60,170,80,0.1);color:#6BCF7F;}
+.tag-limit{background:rgba(255,165,0,0.1);color:#FFA500;}
+.tag-no{background:rgba(255,60,60,0.1);color:#FF7070;}
+.notice-list{margin-top:8px;}
+.notice-item{font-size:12px;color:var(--t3);line-height:1.7;padding-left:14px;position:relative;}
+.notice-item::before{content:'·';position:absolute;left:4px;color:var(--accent);}
+footer{padding:2rem;border-top:0.5px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.fc{font-size:10px;color:var(--t3);}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html">On<b>●</b>earth</a>
+  <div class="nav-mid">
+    <a class="nlink" href="search.html">매물 검색</a>
+    <a class="nlink" href="country.html">국가별 탐색</a>
+    <a class="nlink on" href="regulations.html">법규 안내</a>
+  </div>
+  <div class="nav-r">
+    <a class="nbtn" href="mypage.html">로그인</a>
+    <a class="nbtn hi" href="register.html">매물 등록</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">📋 국가별 부동산 법규 안내</div>
+  <h1>나라마다 다른 부동산 규제,<br><i>한눈에 확인하세요</i></h1>
+  <p>외국인 취득 가능 여부, 세금, 주요 규제 등 국가별 핵심 정보를 정리했습니다.</p>
+</div>
+<div class="disclaimer">⚠️ 본 안내는 일반적인 참고 정보입니다. 법규는 수시로 변경될 수 있으므로 실제 거래 전 반드시 현지 공인 중개사 또는 법무 전문가에게 확인하시기 바랍니다. Onearth는 법적 책임을 지지 않습니다.</div>
+
+<div class="layout">
+  <div class="side-nav">
+    <div class="sn-section">
+      <div class="sn-title">아메리카</div>
+      <div class="sn-item on" onclick="goSec('us',this)"><span class="sn-flag">🇺🇸</span>미국</div>
+      <div class="sn-item" onclick="goSec('hi',this)"><span class="sn-flag">🌺</span>하와이</div>
+    </div>
+    <div class="sn-section">
+      <div class="sn-title">유럽</div>
+      <div class="sn-item" onclick="goSec('fr',this)"><span class="sn-flag">🇫🇷</span>프랑스</div>
+      <div class="sn-item" onclick="goSec('pt',this)"><span class="sn-flag">🇵🇹</span>포르투갈</div>
+      <div class="sn-item" onclick="goSec('it',this)"><span class="sn-flag">🇮🇹</span>이탈리아</div>
+      <div class="sn-item" onclick="goSec('gb',this)"><span class="sn-flag">🇬🇧</span>영국</div>
+    </div>
+    <div class="sn-section">
+      <div class="sn-title">아시아 · 오세아니아</div>
+      <div class="sn-item" onclick="goSec('jp',this)"><span class="sn-flag">🇯🇵</span>일본</div>
+      <div class="sn-item" onclick="goSec('kr',this)"><span class="sn-flag">🇰🇷</span>대한민국</div>
+      <div class="sn-item" onclick="goSec('je',this)"><span class="sn-flag">🍊</span>제주도</div>
+      <div class="sn-item" onclick="goSec('sg',this)"><span class="sn-flag">🇸🇬</span>싱가포르</div>
+      <div class="sn-item" onclick="goSec('th',this)"><span class="sn-flag">🇹🇭</span>태국</div>
+      <div class="sn-item" onclick="goSec('ph',this)"><span class="sn-flag">🇵🇭</span>필리핀</div>
+      <div class="sn-item" onclick="goSec('au',this)"><span class="sn-flag">🇦🇺</span>호주</div>
+    </div>
+    <div class="sn-section">
+      <div class="sn-title">중동</div>
+      <div class="sn-item" onclick="goSec('ae',this)"><span class="sn-flag">🇦🇪</span>두바이 (UAE)</div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- 미국 -->
+    <div class="country-section" id="us">
+      <div class="cs-header"><span class="cs-flag">🇺🇸</span><div><div class="cs-name">미국</div><div class="cs-meta">USD · 주별 규제 상이</div></div><a class="cs-link" href="country.html?c=us">매물 보기 →</a></div>
+      <div class="reg-grid">
+        <div class="reg-item"><div class="ri-label">외국인 취득</div><div class="ri-val">자유롭게 가능. FIRPTA 적용.</div><span class="ri-tag tag-ok">✓ 가능</span></div>
+        <div class="reg-item"><div class="ri-label">취득세</div><div class="ri-val">주별 0.5~2.5%. 일부 주 이전세 추가.</div></div>
+        <div class="reg-item"><div class="ri-label">재산세 (연간)</div><div class="ri-val">평가가의 0.3~2.2%. 주마다 차이 큼.</div></div>
+        <div class="reg-item"><div class="ri-label">양도소득세</div><div class="ri-val">외국인 매각 시 15% FIRPTA 원천징수.</div></div>
+        <div class="reg-item"><div class="ri-label">임대 규제</div><div class="ri-val">NYC·LA 등 임대료 규제 도시 있음.</div><span class="ri-tag tag-limit">⚠ 도시별 상이</span></div>
+        <div class="reg-item"><div class="ri-label">모기지</div><div class="ri-val">외국인 다운페이먼트 20~40% 일반적.</div></div>
+      </div>
+      <div class="notice-list">
+        <div class="notice-item">에스크로 제도 사용 — 제3자 기관이 거래 자금 보관</div>
+        <div class="notice-item">공인 부동산 에이전트(Realtor) 및 부동산 변호사 동반 거래 권장</div>
+        <div class="notice-item">주(State)별로 규제 차이가 크므로 반드시 해당 주 법규 별도 확인 필요</div>
+      </div>
+    </div>
+
+    <!-- 하와이 -->
+    <div class="country-section" id="hi">
+      <div class="cs-header"><span class="cs-flag">🌺</span><div><div class="cs-name">하와이 (미국)</div><div class="cs-meta">USD · 미국 법 적용 + 주 특별 규제</div></div><a class="cs-link" href="country.html?c=us">매물 보기 →</a></div>
+      <div class="reg-grid">
+        <div class="reg-item"><div class="ri-label">외국인 취득</div><div class="ri-val">미국 법 적용. 외국인 취득 가능.</div><span class="ri-tag tag-ok">✓ 가능</span></div>
+        <div class="reg-item"><div class="ri-label">취득세</div><div class="ri-val">부동산 이전세 0.1~1.25% (금액별 차등).</div></div>
+        <div class="reg-item"><div class="ri-label">재산세 (연간)</div><div class="ri-val">카운티별 상이. 호놀룰루 약 0.35%.</div></div>
+        <div class="reg-item"><div class="ri-label">양도소득세</div><div class="ri-val">FIRPTA 15% + 하와이 주 7.25% 추가.</div></div>
+        <div class="reg-item"><div class="ri-label">토지 소유 특성</div><div class="ri-val">Fee Simple(완전소유) vs Leasehold(임차) 구분 필수.</div><span class="ri-tag tag-limit">⚠ 리스홀드 주의</span></div>
+        <div class="reg-item"><div class="ri-label">단기임대 규제</div><div class="ri-val">Airbnb 등 단기 임대 구역 엄격 제한.</div><span class="ri-tag tag-limit">⚠ 제한 구역 많음</span></div>
+      </div>
+      <div class="notice-list">
+        <div class="notice-item">Leasehold 매물은 임차 만료 후 반환 — 반드시 잔여 기간 확인</div>
+        <div class="notice-item">단기 임대 허용 구역(Resort Zoning) 여부 반드시 사전 확인</div>
+        <div class="notice-item">코나, 마우이 등 섬별로 추가 규제 다를 수 있음</div>
+      </div>
+    </div>
+
+    <!-- 프랑스 -->
+    <div class="country-section" id="fr">
+      <div class="cs-header"><span class="cs-flag">🇫🇷</span><div><div class="cs-name">프랑스</div><div class="cs-meta">EUR · EU 외 외국인 제한 없음</div></div><a class="cs-link" href="country.html?c=fr">매물 보기 →</a></div>
+      <div class="reg-grid">
+        <div class="reg-item"><div class="ri-label">외국인 취득</div><div class="ri-val">제한 없음. 비EU 시민도 자유 취득.</div><span class="ri-tag tag-ok">✓ 가능</span></div>
+        <div class="reg-item"><div class="ri-label">취득 관련 세금</div><div class="ri-val">등록세 + 공증료 합산 약 7~8%.</div></div>
+        <div class="reg-item"><div class="ri-label">재산세 (연간)</div><div class="ri-val">Taxe Foncière — 지역·물건별 상이.</div></div>
+        <div class="reg-item"><div class="ri-label">양도소득세</div><div class="ri-val">비거주자 36.2%. 보유 기간 따라 감면.</div></div>
+        <div class="reg-item"><div class="ri-label">공증인 제도</div><div class="ri-val">모든 거래는 공증인(Notaire) 통해 진행 의무.</div><span class="ri-tag tag-limit">⚠ 필수</span></div>
+        <div class="reg-item"><div class="ri-label">임대 규제</div><div class="ri-val">파리 등 주요 도시 임대료 상한제 적용.</div></div>
+      </div>
+      <div class="notice-list">
+        <div class="notice-item">공증인(Notaire)을 통한 거래가 법적으로 의무화되어 있음</div>
+        <div class="notice-item">계약 체결 후 10일 이내 철회권(Cooling-off period) 보장</div>
+        <div class="notice-item">파리 내 단기 임대는 120일/년 제한 — 등록 의무 있음</div>
+      </div>
+    </div>
+
+    <!-- 포르투갈 -->
+    <div class="country-section" id="pt">
+      <div class="cs-header"><span class="cs-flag">🇵🇹</span><div><div class="cs-name">포르투갈</div><div class="cs-meta">EUR · NHR 세제 혜택 · 황금비자</div></div><a class="cs-link" href="country.html?c=pt">매물 보기 →</a></div>
+      <div class="reg-grid">
+        <div class="reg-item"><div class="ri-label">외국인 취득</div><div class="ri-val">제한 없음. EU 외 시민도 자유롭게 취득.</div><span class="ri-tag tag-ok">✓ 가능</span></div>
+        <div class="reg-item"><div class="ri-label">취득세 (IMT)</div><div class="ri-val">거래가의 1~8% 구간별 과세. 첫 주택 면제 혜택 있음.</div></div>
+        <div class="reg-item"><div class="ri-label">인지세</div><div class="ri-val">거래가의 0.8% 고정.</div></div>
+        <div class="reg-item"><div class="ri-label">재산세 (IMI)</div><div class="ri-val">도시 부동산 0.3~0.45% / 농촌 0.8%.</div></div>
+        <div class="reg-item"><div class="ri-label">양도소득세</div><div class="ri-val">비거주자 28% 단일세율. 거주자는 소득 합산.</div></div>
+        <div class="reg-item"><div class="ri-label">황금비자</div><div class="ri-val">50만 유로 이상 투자 시 거주 비자 취득 가능 (일부 지역 제한).</div><span class="ri-tag tag-ok">✓ 투자비자</span></div>
+      </div>
+      <div class="notice-list">
+        <div class="notice-item">리스본·포르투 주거지역 황금비자 제한 — 알가르베·인테리어 지역은 여전히 가능</div>
+        <div class="notice-item">NHR(비거주자 과세 특례) 제도 — 외국 소득 10년간 세제 혜택 (2024년 이후 변경 확인 필요)</div>
+        <div class="notice-item">Promissory Contract(CPCV) 체결 후 30일 이내 계약금 10~30% 납부 일반적</div>
+      </div>
+    </div>
+
+    <!-- 이탈리아 -->
+    <div class="country-section" id="it">
+      <div class="cs-header"><span class="cs-flag">🇮🇹</span><div><div class="cs-name">이탈리아</div><div class="cs-meta">EUR · 1유로 주택 프로그램</div></div><a class="cs-link" href="country.html?c=it">매물 보기 →</a></div>
+      <div class="reg-grid">
+        <div class="reg-item"><div class="ri-label">외국인 취득</div><div class="ri-val">상호주의 원칙 적용. 대부분 국가 가능.</div><span class="ri-tag tag-ok">✓ 가능</span></div>
+        <div class="reg-item"><div class="ri-label">등록세</div><div class="ri-val">중고주택 9% / 신축 4% (첫 주택 2~4% 감면).</div></div>
+        <div class="reg-item"><div class="ri-label">재산세 (IMU)</div><div class="ri-val">주 거주지 면제. 별장·임대용 0.76~1.06%.</div></div>
+        <div class="reg-item"><div class="ri-label">양도소득세</div><div class="ri-val">5년 내 매각 시 26%. 5년 이상 보유 면제.</div></div>
+        <div class="reg-item"><div class="ri-label">1유로 주택</div><div class="ri-val">인구 감소 지역 상징적 가격 매각. 리노베이션 의무 조건.</div><span class="ri-tag tag-ok">✓ 기회 있음</span></div>
+        <div class="reg-item"><div class="ri-label">Codice Fiscale</div><div class="ri-val">이탈리아 세금 코드 필수 취득 — 거래 전 발급 요.</div><span class="ri-tag tag-limit">⚠ 사전 준비</span></div>
+      </div>
+      <div class="notice-list">
+        <div class="notice-item">공증인(Notaio)을 통한 계약 의무화. 공증료 약 1~2.5%</div>
+        <div class="notice-item">1유로 주택은 3년 내 리노베이션 완료 조건 — 비용 검토 필수</div>
+        <div class="notice-item">남부 이탈리아(시칠리아·사르데냐·칼라브리아) 이주 보조금 프로그램 운영 중</div>
+      </div>
+    </div>
+
+    <!-- 영국 -->
+    <div class="country-section" id="gb">
+      <div class="cs-header"><span class="cs-flag">🇬🇧</span><div><div class="cs-name">영국</div><div class="cs-meta">GBP · 브렉시트 이후 외국인 추가 세율</div></div><a class="cs-link" href="country.html?c=gb">매물 보기 →</a></div>
+      <div class="reg-grid">
+        <div class="reg-item"><div class="ri-label">외국인 취득</div><div class="ri-val">가능. 비거주자 SDLT 2% 추가 부담.</div><span class="ri-tag tag-ok">✓ 가능</span></div>
+        <div class="reg-item"><div class="ri-label">인지세 (SDLT)</div><div class="ri-val">£125k 초과분 2~12%. 외국인 +2% 추가.</div></div>
+        <div class="reg-item"><div class="ri-label">Council Tax (연간)</div><div class="ri-val">지역별 £1,000~£3,000+. 임차인 부담 일반.</div></div>
+        <div class="reg-item"><div class="ri-label">양도소득세</div><div class="ri-val">비거주자 18~28% (주거용). 신고 60일 내 의무.</div></div>
+        <div class="reg-item"><div class="ri-label">Leasehold 주의</div><div class="ri-val">영국 아파트 다수 Leasehold — 지상권 연장 비용 확인.</div><span class="ri-tag tag-limit">⚠ 리스홀드 확인</span></div>
+        <div class="reg-item"><div class="ri-label">임대 규제</div><div class="ri-val">임대인 라이선스 요구 지역 확대 중. EPC 등급 요건.</div></div>
+      </div>
+      <div class="notice-list">
+        <div class="notice-item">Freehold(토지포함) vs Leasehold(건물만) 구분 필수 확인</div>
+        <div class="notice-item">Leasehold 잔여 기간 80년 미만 시 모기지 거부 가능 — 기간 연장 비용 발생</div>
+        <div class="notice-item">런던 기준 구매 비용(법무비·검사비 포함) 약 5~7% 추가 예상</div>
+      </div>
+    </div>
+
+    <!-- 일본 -->
+    <div class="country-section" id="jp">
+      <div class="cs-header"><span class="cs-flag">🇯🇵</span><div><div class="cs-name">일본</div><div class="cs-meta">JPY · 외국인 취득 비교적 자유</div></div><a class="cs-link" href="country.html?c=jp">매물 보기 →</a></div>
+      <div class="reg-grid">
+        <div class="reg-item"><div class="ri-label">외국인 취득</div><div class="ri-val">외국인도 자유롭게 취득 가능.</div><span class="ri-tag tag-ok">✓ 가능</span></div>
+        <div class="reg-item"><div class="ri-label">취득세</div><div class="ri-val">부동산 취득세 3~4%. 등록면허세 별도.</div></div>
+        <div class="reg-item"><div class="ri-label">고정자산세 (연간)</div><div class="ri-val">과세표준의 약 1.4%. 도시계획세 0.3% 추가.</div></div>
+        <div class="reg-item"><div class="ri-label">양도소득세</div><div class="ri-val">단기(5년 이내) 39%, 장기 20%.</div></div>
+        <div class="reg-item"><div class="ri-label">외국인 규제</div><div class="ri-val">취득 시 신고 의무(일정 규모 이상).</div><span class="ri-tag tag-limit">⚠ 신고 필요</span></div>
+        <div class="reg-item"><div class="ri-label">주의 사항</div><div class="ri-val">구조 연도 확인 필수. 1981년 이후 신내진기준 적용.</div></div>
+      </div>
+      <div class="notice-list">
+        <div class="notice-item">토지와 건물 별도 평가 — 건물 감가상각, 토지는 가치 유지</div>
+        <div class="notice-item">빈집(空き家) 매입 기회 다수 — 일부 지자체 무상 제공 프로그램 운영</div>
+        <div class="notice-item">외국인 대출은 일본 내 소득 증빙 어려워 현금 거래 또는 해외 대출 활용</div>
+      </div>
+    </div>
+
+    <!-- 대한민국 -->
+    <div class="country-section" id="kr">
+      <div class="cs-header"><span class="cs-flag">🇰🇷</span><div><div class="cs-name">대한민국</div><div class="cs-meta">KRW · 외국인 취득 신고제</div></div><a class="cs-link" href="country.html?c=kr">매물 보기 →</a></div>
+      <div class="reg-grid">
+        <div class="reg-item"><div class="ri-label">외국인 취득</div><div class="ri-val">사전 신고 후 취득 가능 (외국인토지법).</div><span class="ri-tag tag-ok">✓ 신고 후 가능</span></div>
+        <div class="reg-item"><div class="ri-label">취득세</div><div class="ri-val">1~3% (주택). 6억 초과 구간별 차등.</div></div>
+        <div class="reg-item"><div class="ri-label">종합부동산세</div><div class="ri-val">공시가격 합산 9억 초과 시 부과 (주택).</div><span class="ri-tag tag-limit">⚠ 다주택 중과</span></div>
+        <div class="reg-item"><div class="ri-label">양도소득세</div><div class="ri-val">6~45% 누진세율. 단기 보유 중과세.</div></div>
+        <div class="reg-item"><div class="ri-label">전세 제도</div><div class="ri-val">한국 고유 제도. 보증금 100% 보호 필수 확인.</div><span class="ri-tag tag-limit">⚠ 외국인 주의</span></div>
+        <div class="reg-item"><div class="ri-label">규제 지역</div><div class="ri-val">투기과열지구·조정대상지역 대출·청약 제한.</div></div>
+      </div>
+      <div class="notice-list">
+        <div class="notice-item">외국인 토지 취득 신고 — 계약 후 60일 이내 시군구청 신고 의무</div>
+        <div class="notice-item">전세 사기 예방 — 전세보증보험 가입 및 확정일자 필수</div>
+        <div class="notice-item">부동산 규제는 정부 정책에 따라 빈번히 변경되므로 최신 정보 확인 필수</div>
+      </div>
+    </div>
+
+    <!-- 제주도 -->
+    <div class="country-section" id="je">
+      <div class="cs-header"><span class="cs-flag">🍊</span><div><div class="cs-name">제주도 (대한민국)</div><div class="cs-meta">KRW · 투자이민 · 개발 제한</div></div><a class="cs-link" href="country.html?c=kr">매물 보기 →</a></div>
+      <div class="reg-grid">
+        <div class="reg-item"><div class="ri-label">외국인 취득</div><div class="ri-val">가능. 사전 신고 후 취득 (외국인토지법).</div><span class="ri-tag tag-ok">✓ 신고 후 가능</span></div>
+        <div class="reg-item"><div class="ri-label">취득세</div><div class="ri-val">1~3% (주택). 농지·임야 별도.</div></div>
+        <div class="reg-item"><div class="ri-label">재산세 (연간)</div><div class="ri-val">0.1~0.4% (토지·건물 구분 과세).</div></div>
+        <div class="reg-item"><div class="ri-label">절대보전지역</div><div class="ri-val">한라산 일대 등 개발 제한 구역 다수.</div><span class="ri-tag tag-no">✗ 개발 불가</span></div>
+        <div class="reg-item"><div class="ri-label">투자이민</div><div class="ri-val">5억 원 이상 휴양시설 투자 시 F-2 비자 가능.</div><span class="ri-tag tag-ok">✓ 투자비자</span></div>
+        <div class="reg-item"><div class="ri-label">중국인 소유 규제</div><div class="ri-val">제주 특별법상 중국 자본 토지 취득 모니터링 강화.</div></div>
+      </div>
+      <div class="notice-list">
+        <div class="notice-item">절대보전지역·상대보전지역·관리보전지역 구분 사전 확인 필수</div>
+        <div class="notice-item">투자이민 F-2 비자는 콘도·리조트 등 등록된 휴양시설에 한정</div>
+      </div>
+    </div>
+
+    <!-- 싱가포르 -->
+    <div class="country-section" id="sg">
+      <div class="cs-header"><span class="cs-flag">🇸🇬</span><div><div class="cs-name">싱가포르</div><div class="cs-meta">SGD · 외국인 취득세 높음</div></div><a class="cs-link" href="country.html?c=sg">매물 보기 →</a></div>
+      <div class="reg-grid">
+        <div class="reg-item"><div class="ri-label">외국인 취득</div><div class="ri-val">가능. ABSD 60% 부과 (2023년 기준).</div><span class="ri-tag tag-limit">⚠ 고세율</span></div>
+        <div class="reg-item"><div class="ri-label">콘도 취득</div><div class="ri-val">외국인 콘도 취득 가능. HDB(공공주택) 불가.</div></div>
+        <div class="reg-item"><div class="ri-label">취득세</div><div class="ri-val">BSD 1~4% + ABSD 60% (외국인 기준).</div></div>
+        <div class="reg-item"><div class="ri-label">토지 취득</div><div class="ri-val">외국인 단독주택·토지 취득 별도 승인 필요.</div><span class="ri-tag tag-limit">⚠ 승인 필요</span></div>
+        <div class="reg-item"><div class="ri-label">임대</div><div class="ri-val">임대 수익률 3~4%. 최소 임대 기간 3개월.</div></div>
+        <div class="reg-item"><div class="ri-label">영주권자</div><div class="ri-val">ABSD 5%, 시민권자 1주택 면제.</div></div>
+      </div>
+      <div class="notice-list">
+        <div class="notice-item">Sentosa Cove는 외국인도 랜드드 프로퍼티 취득 가능한 특별 구역</div>
+        <div class="notice-item">99년 임차(Leasehold) 매물이 대부분 — 잔여 기간 확인 필수</div>
+      </div>
+    </div>
+
+    <!-- 태국 -->
+    <div class="country-section" id="th">
+      <div class="cs-header"><span class="cs-flag">🇹🇭</span><div><div class="cs-name">태국</div><div class="cs-meta">THB · 외국인 토지 소유 불가</div></div><a class="cs-link" href="country.html?c=th">매물 보기 →</a></div>
+      <div class="reg-grid">
+        <div class="reg-item"><div class="ri-label">외국인 토지</div><div class="ri-val">토지 직접 소유 불가.</div><span class="ri-tag tag-no">✗ 불가</span></div>
+        <div class="reg-item"><div class="ri-label">콘도미니엄</div><div class="ri-val">건물 전체 외국인 비율 49%까지 취득 가능.</div><span class="ri-tag tag-ok">✓ 가능 (49%)</span></div>
+        <div class="reg-item"><div class="ri-label">취득세</div><div class="ri-val">이전세 2% + 특별사업세 3.3% 또는 인지세.</div></div>
+        <div class="reg-item"><div class="ri-label">장기 임차</div><div class="ri-val">Chanote 토지 30+30년 임차 가능.</div><span class="ri-tag tag-limit">⚠ 리스 방식</span></div>
+        <div class="reg-item"><div class="ri-label">법인 설립</div><div class="ri-val">태국 법인(51% 내국인) 통한 간접 취득 — 법적 리스크 있음.</div></div>
+        <div class="reg-item"><div class="ri-label">타이틀 확인</div><div class="ri-val">Chanote 타이틀 필수. Nor Sor 3는 소유권 취약.</div></div>
+      </div>
+      <div class="notice-list">
+        <div class="notice-item">콘도 구매 시 외화 송금 증명서(FET) 필수 — 은행에서 발급</div>
+        <div class="notice-item">푸켓·파타야·치앙마이 지역 개발 제한 구역 별도 확인</div>
+      </div>
+    </div>
+
+    <!-- 필리핀 -->
+    <div class="country-section" id="ph">
+      <div class="cs-header"><span class="cs-flag">🇵🇭</span><div><div class="cs-name">필리핀</div><div class="cs-meta">PHP · 외국인 토지 취득 불가</div></div><a class="cs-link" href="country.html?c=ph">매물 보기 →</a></div>
+      <div class="reg-grid">
+        <div class="reg-item"><div class="ri-label">외국인 토지 취득</div><div class="ri-val">헌법상 외국인 토지 소유 금지.</div><span class="ri-tag tag-no">✗ 불가</span></div>
+        <div class="reg-item"><div class="ri-label">콘도미니엄</div><div class="ri-val">외국인 콘도 40%까지 취득 가능(단위별).</div><span class="ri-tag tag-ok">✓ 가능 (40%)</span></div>
+        <div class="reg-item"><div class="ri-label">취득세</div><div class="ri-val">DST 1.5% + 이전세 0.5%.</div></div>
+        <div class="reg-item"><div class="ri-label">임대차</div><div class="ri-val">장기 임대(25+25년) 방식으로 토지 이용 가능.</div><span class="ri-tag tag-limit">⚠ 리스 방식</span></div>
+        <div class="reg-item"><div class="ri-label">법인 취득</div><div class="ri-val">필리핀 법인(60% 내국인 지분) 통해 토지 간접 보유 가능.</div></div>
+        <div class="reg-item"><div class="ri-label">타이틀 확인</div><div class="ri-val">TCT/CCT 반드시 확인. 위조 서류 주의.</div></div>
+      </div>
+      <div class="notice-list">
+        <div class="notice-item">인기 지역(보라카이·팔라완·세부) 개발 제한 구역 존재</div>
+        <div class="notice-item">콘도 구매 시 반드시 개발사 신뢰도 및 HLURB 프로젝트 승인 여부 확인</div>
+      </div>
+    </div>
+
+    <!-- 호주 -->
+    <div class="country-section" id="au">
+      <div class="cs-header"><span class="cs-flag">🇦🇺</span><div><div class="cs-name">호주</div><div class="cs-meta">AUD · FIRB 사전 심사 필수</div></div><a class="cs-link" href="country.html?c=au">매물 보기 →</a></div>
+      <div class="reg-grid">
+        <div class="reg-item"><div class="ri-label">외국인 취득</div><div class="ri-val">FIRB(외국인투자심의위원회) 사전 승인 필수.</div><span class="ri-tag tag-limit">⚠ 승인 필요</span></div>
+        <div class="reg-item"><div class="ri-label">신축 취득</div><div class="ri-val">신축 주택·개발 승인된 토지는 외국인 취득 허용.</div><span class="ri-tag tag-ok">✓ 신축 가능</span></div>
+        <div class="reg-item"><div class="ri-label">기존 주택</div><div class="ri-val">비거주자 기존 주택(중고) 구매 원칙적 불가.</div><span class="ri-tag tag-no">✗ 중고 불가</span></div>
+        <div class="reg-item"><div class="ri-label">FIRB 신청비</div><div class="ri-val">거래가 100만 AUD 기준 약 13,200 AUD.</div></div>
+        <div class="reg-item"><div class="ri-label">인지세</div><div class="ri-val">주별 3~5.5%. 외국인 추가 8% (NSW 기준).</div></div>
+        <div class="reg-item"><div class="ri-label">양도소득세</div><div class="ri-val">비거주자 32.5~45% 소득세율 적용.</div></div>
+      </div>
+      <div class="notice-list">
+        <div class="notice-item">임시 거주자(Temporary Resident)는 거주용 기존 주택 1채 구매 가능 — 이주 시 매각 의무</div>
+        <div class="notice-item">주(State)별로 인지세 및 외국인 추가세 차이 있음 (QLD, VIC, NSW, WA 각각 상이)</div>
+        <div class="notice-item">FIRB 승인은 일반적으로 30일 내 처리. 농업용 토지 등 민감 자산은 심사 강화</div>
+      </div>
+    </div>
+
+    <!-- 두바이 -->
+    <div class="country-section" id="ae">
+      <div class="cs-header"><span class="cs-flag">🇦🇪</span><div><div class="cs-name">두바이 (UAE)</div><div class="cs-meta">AED · 세금 없음 · Golden Visa</div></div><a class="cs-link" href="country.html?c=ae">매물 보기 →</a></div>
+      <div class="reg-grid">
+        <div class="reg-item"><div class="ri-label">외국인 취득</div><div class="ri-val">지정 프리홀드 존에서 외국인 완전 소유 가능.</div><span class="ri-tag tag-ok">✓ 가능 (지정 구역)</span></div>
+        <div class="reg-item"><div class="ri-label">취득세</div><div class="ri-val">부동산 등록비 4% (Dubai Land Department).</div></div>
+        <div class="reg-item"><div class="ri-label">재산세 · 소득세</div><div class="ri-val">없음. 개인 소득세 및 재산세 0%.</div><span class="ri-tag tag-ok">✓ 세금 없음</span></div>
+        <div class="reg-item"><div class="ri-label">임대 수익</div><div class="ri-val">연 5~8% 임대 수익률. 세금 없이 전액 수령.</div></div>
+        <div class="reg-item"><div class="ri-label">Golden Visa</div><div class="ri-val">200만 AED(약 7억) 이상 투자 시 10년 비자 발급.</div><span class="ri-tag tag-ok">✓ 투자 비자</span></div>
+        <div class="reg-item"><div class="ri-label">오프플랜</div><div class="ri-val">선분양 리스크 — 개발사 DLD 등록 여부 확인 필수.</div><span class="ri-tag tag-limit">⚠ 개발사 확인</span></div>
+      </div>
+      <div class="notice-list">
+        <div class="notice-item">프리홀드 존 주요 지역: 다운타운, 마리나, 팜 주메이라, 비즈니스 베이 등</div>
+        <div class="notice-item">RERA(부동산 규제 기관) 등록 중개인 통해 거래 권장</div>
+        <div class="notice-item">오프플랜 구매 시 에스크로 계좌(RERA 관리) 입금 여부 반드시 확인</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <a class="logo" href="index.html">On<b>●</b>earth</a>
+  <div class="fc">© 2025 ONEARTH — 본 정보는 참고용이며 법적 효력이 없습니다.</div>
+</footer>
+
+<script>
+function goSec(id, el){
+  const target = document.getElementById(id);
+  if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+  document.querySelectorAll('.sn-item').forEach(i => i.classList.remove('on'));
+  el.classList.add('on');
+}
+window.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('.country-section');
+  const items = document.querySelectorAll('.sn-item');
+  let current = '';
+  sections.forEach(s => { if(window.scrollY >= s.offsetTop - 100) current = s.id; });
+  items.forEach(i => {
+    const fn = i.getAttribute('onclick');
+    if(fn && fn.includes("'"+current+"'")) i.classList.add('on');
+    else i.classList.remove('on');
+  });
+});
+</script>
+</body>
+</html>
