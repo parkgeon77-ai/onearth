@@ -2,141 +2,175 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Onearth — 전세계 프리미엄 부동산</title>
+<title>Onearth — Global Real Estate Platform</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --bg:#09090B;--sf:#111113;--card:#161618;--card2:#1C1C1F;
-  --accent:#BFA06A;--adim:rgba(191,160,106,0.10);--aline:rgba(191,160,106,0.22);
-  --text:#ECEAE4;--t2:#7A7872;--t3:#3C3A37;--line:rgba(255,255,255,0.06);
-  --green:#6BCF7F;--red:#FF7070;--orange:#FFA500;
+  --accent:#BFA06A;--adim:rgba(191,160,106,0.08);--aline:rgba(191,160,106,0.25);
+  --text:#ECEAE4;--t2:#8A8880;--t3:#4A4845;--line:rgba(255,255,255,0.07);
+  --green:#6BCF7F;--orange:#F59E0B;
 }
 body{background:var(--bg);color:var(--text);font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 a{color:inherit;text-decoration:none;}
-img{display:block;width:100%;object-fit:cover;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.65s ease,transform 0.65s ease;}
+.reveal.in{opacity:1;transform:none;}
+.d1{transition-delay:.1s}.d2{transition-delay:.18s}.d3{transition-delay:.26s}.d4{transition-delay:.34s}
 
 /* NAV */
-nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(9,9,11,0.92);backdrop-filter:blur(24px);border-bottom:0.5px solid var(--line);}
-.logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;letter-spacing:0.04em;}
+nav{position:sticky;top:0;z-index:100;height:64px;padding:0 3rem;display:flex;align-items:center;justify-content:space-between;background:rgba(9,9,11,0.88);backdrop-filter:blur(32px);border-bottom:0.5px solid var(--line);}
+.logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;letter-spacing:0.06em;}
 .logo b{color:var(--accent);font-weight:400;}
-.nav-mid{display:flex;align-items:center;gap:2px;}
-.nlink{padding:7px 13px;border-radius:8px;font-size:12px;color:var(--t2);transition:all 0.18s;}
-.nlink:hover,.nlink.on{color:var(--text);background:rgba(255,255,255,0.04);}
-.nav-r{display:flex;align-items:center;gap:8px;}
-.nbtn{padding:7px 14px;border-radius:8px;border:0.5px solid var(--line);background:none;color:var(--t2);font-size:12px;font-family:inherit;cursor:pointer;transition:all 0.18s;}
+.nav-mid{display:flex;gap:2px;}
+.nlink{padding:8px 15px;border-radius:8px;font-size:12px;color:var(--t2);letter-spacing:.02em;transition:all .18s;}
+.nlink:hover{color:var(--text);background:rgba(255,255,255,0.05);}
+.nav-r{display:flex;gap:10px;}
+.nbtn{padding:8px 16px;border-radius:8px;border:0.5px solid var(--line);background:none;color:var(--t2);font-size:12px;font-family:inherit;cursor:pointer;transition:all .18s;}
 .nbtn:hover{color:var(--text);}
 .nbtn.hi{background:var(--accent);color:#09090B;border-color:var(--accent);font-weight:600;}
+.nbtn.hi:hover{background:#CBB07A;}
 
 /* HERO */
-.hero{position:relative;min-height:calc(100vh - 60px);display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:4rem 2rem;}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(191,160,106,0.08) 0%,transparent 70%),radial-gradient(ellipse 50% 40% at 20% 80%,rgba(191,160,106,0.04) 0%,transparent 60%);pointer-events:none;}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at center,black 30%,transparent 80%);pointer-events:none;}
-.hero-inner{position:relative;max-width:760px;}
-.hero-eyebrow{font-size:11px;letter-spacing:0.18em;color:var(--accent);text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;gap:12px;}
-.hero-eyebrow::before,.hero-eyebrow::after{content:'';flex:1;max-width:60px;height:0.5px;background:var(--aline);}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.6rem,6vw,4.2rem);font-weight:300;line-height:1.2;margin-bottom:1.2rem;letter-spacing:-0.01em;}
-.hero h1 i{color:var(--accent);}
-.hero p{font-size:14px;color:var(--t2);line-height:1.9;max-width:520px;margin:0 auto 2.5rem;}
-.hero-btns{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;}
-.btn-primary{padding:13px 28px;border-radius:10px;background:var(--accent);color:#09090B;font-size:13px;font-weight:600;font-family:inherit;border:none;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;}
-.btn-primary:hover{background:#cfa96e;transform:translateY(-1px);}
-.btn-ghost{padding:13px 28px;border-radius:10px;background:none;color:var(--text);font-size:13px;font-family:inherit;border:0.5px solid var(--line);cursor:pointer;transition:all 0.2s;}
-.btn-ghost:hover{border-color:var(--aline);background:var(--adim);}
-.hero-stats{margin-top:3.5rem;display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;}
-.hs-item{padding:0 2rem;text-align:center;border-right:0.5px solid var(--line);}
-.hs-item:last-child{border-right:none;}
-.hs-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:400;color:var(--accent);}
-.hs-label{font-size:11px;color:var(--t2);margin-top:3px;letter-spacing:0.06em;}
+.hero{position:relative;min-height:calc(100vh - 64px);display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:5rem 2rem 4rem;}
+.hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% -5%,rgba(191,160,106,0.13) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 15% 70%,rgba(191,160,106,0.05) 0%,transparent 50%);pointer-events:none;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 60% 50% at 50% 50%,black,transparent);pointer-events:none;}
+.hero-inner{position:relative;max-width:820px;z-index:1;}
+.eyebrow{font-size:11px;letter-spacing:.22em;color:var(--accent);text-transform:uppercase;margin-bottom:1.8rem;display:flex;align-items:center;justify-content:center;gap:14px;}
+.eyebrow::before,.eyebrow::after{content:'';flex:1;max-width:48px;height:0.5px;background:var(--aline);}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,6.5vw,4.8rem);font-weight:300;line-height:1.18;letter-spacing:-.015em;margin-bottom:1.4rem;}
+.hero h1 em{display:block;color:var(--accent);font-style:italic;}
+.hero-sub{font-size:14px;color:var(--t2);line-height:2;max-width:480px;margin:0 auto 2.8rem;font-weight:300;}
+.hero-btns{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:4rem;}
 
-/* SEARCH BAR */
-.search-section{padding:0 2rem;margin-top:-1px;}
-.search-bar{max-width:800px;margin:0 auto;background:var(--card);border:0.5px solid var(--line);border-radius:14px;padding:1.5rem;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:end;}
-@media(max-width:700px){.search-bar{grid-template-columns:1fr;}}
-.sb-field label{display:block;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--t3);margin-bottom:6px;}
-.sb-field select,.sb-field input{width:100%;background:var(--sf);border:0.5px solid var(--line);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);font-family:inherit;outline:none;appearance:none;}
-.sb-field select:focus,.sb-field input:focus{border-color:var(--aline);}
-.sb-btn{padding:10px 20px;border-radius:8px;background:var(--accent);color:#09090B;font-size:13px;font-weight:600;font-family:inherit;border:none;cursor:pointer;white-space:nowrap;transition:background 0.18s;}
-.sb-btn:hover{background:#cfa96e;}
+.btn-gold{padding:14px 30px;border-radius:10px;background:var(--accent);color:#09090B;font-size:13px;font-weight:600;font-family:inherit;border:none;cursor:pointer;letter-spacing:.02em;transition:all .25s;display:inline-flex;align-items:center;gap:9px;}
+.btn-gold:hover{background:#CBB07A;transform:translateY(-2px);box-shadow:0 14px 36px rgba(191,160,106,0.22);}
+.btn-ghost{padding:14px 30px;border-radius:10px;background:none;color:var(--text);font-size:13px;font-family:inherit;border:0.5px solid rgba(255,255,255,0.12);cursor:pointer;letter-spacing:.02em;transition:all .25s;}
+.btn-ghost:hover{border-color:var(--aline);background:rgba(191,160,106,0.06);}
 
-/* SECTION COMMON */
-section{padding:5rem 2rem;}
-.sec-head{text-align:center;margin-bottom:3rem;}
-.sec-eye{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;}
-.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:400;}
-.sec-sub{font-size:13px;color:var(--t2);margin-top:0.6rem;line-height:1.8;}
+.hero-stats{display:flex;align-items:stretch;justify-content:center;flex-wrap:wrap;border:0.5px solid var(--line);border-radius:16px;background:rgba(22,22,24,0.7);backdrop-filter:blur(12px);overflow:hidden;max-width:520px;margin:0 auto;}
+.hs{flex:1;min-width:110px;padding:1.4rem 1rem;text-align:center;border-right:0.5px solid var(--line);}
+.hs:last-child{border-right:none;}
+.hs-n{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--accent);line-height:1;}
+.hs-l{font-size:10px;color:var(--t2);margin-top:5px;letter-spacing:.08em;text-transform:uppercase;}
 
-/* PROPERTIES GRID */
-.prop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;max-width:1200px;margin:0 auto;}
-.prop-card{background:var(--card);border:0.5px solid var(--line);border-radius:14px;overflow:hidden;transition:all 0.22s;cursor:pointer;}
-.prop-card:hover{border-color:var(--aline);transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,0.4);}
-.pc-img{height:200px;background:var(--sf);position:relative;overflow:hidden;}
-.pc-img-inner{width:100%;height:100%;background:linear-gradient(135deg,#1a1a1e 0%,#222226 100%);display:flex;align-items:center;justify-content:center;font-size:3rem;color:var(--t3);}
-.pc-badge{position:absolute;top:10px;left:10px;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:0.06em;}
-.badge-new{background:var(--accent);color:#09090B;}
-.badge-hot{background:rgba(255,100,100,0.15);color:#FF7070;border:0.5px solid rgba(255,100,100,0.3);}
-.badge-rent{background:rgba(100,180,255,0.12);color:#7EC8F0;border:0.5px solid rgba(100,180,255,0.2);}
-.pc-fav{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(9,9,11,0.7);display:flex;align-items:center;justify-content:center;font-size:14px;backdrop-filter:blur(8px);transition:all 0.18s;}
-.pc-fav:hover{background:rgba(191,160,106,0.2);}
-.pc-body{padding:1rem 1.2rem 1.2rem;}
-.pc-price{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--accent);margin-bottom:4px;}
-.pc-name{font-size:13px;font-weight:500;margin-bottom:3px;}
-.pc-loc{font-size:11px;color:var(--t2);display:flex;align-items:center;gap:4px;}
-.pc-meta{display:flex;gap:12px;margin-top:10px;padding-top:10px;border-top:0.5px solid var(--line);}
-.pc-meta span{font-size:11px;color:var(--t3);}
+/* MARQUEE */
+.mq-wrap{overflow:hidden;border-top:0.5px solid var(--line);border-bottom:0.5px solid var(--line);background:var(--sf);padding:.9rem 0;}
+.mq-track{display:flex;gap:2.8rem;width:max-content;animation:mq 50s linear infinite;}
+.mq-item{font-size:12px;color:var(--t3);white-space:nowrap;display:flex;align-items:center;gap:.9rem;font-family:'Cormorant Garamond',serif;letter-spacing:.03em;}
+.mq-item::after{content:'·';color:var(--aline);}
+.mq-item b{color:var(--accent);font-weight:400;}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* COUNTRIES GRID */
-.country-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;max-width:1100px;margin:0 auto;}
-.country-card{background:var(--card);border:0.5px solid var(--line);border-radius:12px;padding:1.2rem;text-align:center;cursor:pointer;transition:all 0.2s;}
-.country-card:hover{border-color:var(--aline);background:var(--adim);}
-.cc-flag{font-size:2.2rem;margin-bottom:8px;}
-.cc-name{font-size:13px;font-weight:500;margin-bottom:3px;}
-.cc-count{font-size:11px;color:var(--t2);}
-.cc-status{display:inline-block;margin-top:6px;padding:2px 8px;border-radius:20px;font-size:10px;}
-.cs-ok{background:rgba(107,207,127,0.1);color:var(--green);}
-.cs-warn{background:rgba(255,165,0,0.1);color:var(--orange);}
+/* SEARCH */
+.search-wrap{padding:3rem 2rem;}
+.sbar{max-width:860px;margin:0 auto;background:var(--card);border:0.5px solid var(--line);border-radius:16px;padding:1.8rem 2rem;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:16px;align-items:end;}
+@media(max-width:680px){.sbar{grid-template-columns:1fr;}}
+.sf label{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-bottom:8px;}
+.sf select,.sf input{width:100%;background:var(--sf);border:0.5px solid var(--line);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--text);font-family:inherit;outline:none;appearance:none;transition:border-color .18s;}
+.sf select:focus,.sf input:focus{border-color:var(--aline);}
+.sbtn{padding:11px 24px;border-radius:8px;background:var(--accent);color:#09090B;font-size:13px;font-weight:600;font-family:inherit;border:none;cursor:pointer;letter-spacing:.03em;transition:all .2s;white-space:nowrap;}
+.sbtn:hover{background:#CBB07A;}
+
+/* SECTION HEAD */
+section{padding:5.5rem 2rem;}
+.sh{text-align:center;margin-bottom:3.5rem;}
+.sh-eye{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
+.sh-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,2.8rem);font-weight:400;letter-spacing:-.01em;}
+.sh-sub{font-size:13px;color:var(--t2);margin-top:.7rem;line-height:1.9;font-weight:300;}
+
+/* PROPERTY CARDS */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1200px;margin:0 auto;}
+@media(max-width:900px){.pgrid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.pgrid{grid-template-columns:1fr;}}
+.pgrid .pc:first-child{grid-column:span 2;}
+@media(max-width:900px){.pgrid .pc:first-child{grid-column:span 1;}}
+
+.pc{background:var(--card);border:0.5px solid var(--line);border-radius:16px;overflow:hidden;transition:all .3s ease;cursor:pointer;display:block;}
+.pc:hover{border-color:var(--aline);transform:translateY(-4px);box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.pc-img{position:relative;height:210px;overflow:hidden;}
+.pgrid .pc:first-child .pc-img{height:290px;}
+.pc-photo{position:absolute;inset:0;background-size:cover;background-position:center;background-color:var(--card2);transition:transform .6s ease;}
+.pc:hover .pc-photo{transform:scale(1.06);}
+.pc-ov{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0) 35%,rgba(0,0,0,0.8) 100%);}
+.pc-top{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:flex-start;}
+.badge{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+.b-new{background:var(--accent);color:#09090B;}
+.b-hot{background:rgba(255,80,80,0.15);color:#FF7070;border:0.5px solid rgba(255,80,80,0.3);}
+.b-rent{background:rgba(100,180,255,0.12);color:#7EC8F0;border:0.5px solid rgba(100,180,255,0.2);}
+.fav{width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);border:0.5px solid rgba(255,255,255,0.1);transition:all .2s;font-size:14px;color:rgba(255,255,255,0.5);cursor:pointer;}
+.fav:hover{background:rgba(191,160,106,0.25);color:var(--accent);}
+.pc-bot{position:absolute;bottom:0;left:0;right:0;padding:16px;}
+.pc-price{font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--accent);margin-bottom:3px;}
+.pgrid .pc:first-child .pc-price{font-size:1.7rem;}
+.pc-name{font-size:13px;font-weight:500;color:rgba(255,255,255,0.9);margin-bottom:3px;}
+.pc-loc{font-size:11px;color:rgba(255,255,255,0.45);}
+.pc-meta{display:flex;gap:18px;padding:11px 16px;border-top:0.5px solid var(--line);}
+.pc-meta span{font-size:11px;color:var(--t2);}
+
+/* COUNTRY GRID */
+.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1100px;margin:0 auto;}
+@media(max-width:860px){.cgrid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:580px){.cgrid{grid-template-columns:repeat(2,1fr);}}
+.cc{position:relative;border-radius:12px;overflow:hidden;height:160px;cursor:pointer;border:0.5px solid var(--line);transition:all .3s;}
+.cc:hover{border-color:var(--aline);transform:translateY(-3px);box-shadow:0 20px 50px rgba(0,0,0,0.5);}
+.cc-bg{position:absolute;inset:0;background-size:cover;background-position:center;background-color:var(--card2);transition:transform .5s ease;}
+.cc:hover .cc-bg{transform:scale(1.08);}
+.cc-ov{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.68) 100%);}
+.cc-cont{position:absolute;bottom:0;left:0;right:0;padding:14px;}
+.cc-flag{font-size:1.4rem;margin-bottom:4px;line-height:1;}
+.cc-name{font-size:14px;font-weight:600;}
+.cc-cnt{font-size:10px;color:rgba(255,255,255,0.45);margin-top:1px;}
+.cc-tag{position:absolute;top:10px;right:10px;padding:3px 8px;border-radius:20px;font-size:9px;font-weight:600;letter-spacing:.06em;}
+.t-ok{background:rgba(107,207,127,0.2);color:var(--green);}
+.t-warn{background:rgba(245,158,11,0.15);color:var(--orange);}
 
 /* HOW IT WORKS */
-.hiw-section{background:var(--sf);border-top:0.5px solid var(--line);border-bottom:0.5px solid var(--line);}
-.hiw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;background:var(--line);max-width:1000px;margin:0 auto;border:0.5px solid var(--line);border-radius:14px;overflow:hidden;}
-.hiw-item{background:var(--sf);padding:2rem 1.5rem;text-align:center;}
-.hiw-num{font-family:'Cormorant Garamond',serif;font-size:2.4rem;color:var(--aline);margin-bottom:0.8rem;}
-.hiw-title{font-size:14px;font-weight:500;margin-bottom:6px;}
-.hiw-desc{font-size:12px;color:var(--t2);line-height:1.7;}
+.hiw{background:var(--sf);border-top:0.5px solid var(--line);border-bottom:0.5px solid var(--line);}
+.hiw-grid{display:grid;grid-template-columns:repeat(4,1fr);max-width:1100px;margin:0 auto;position:relative;}
+.hiw-grid::before{content:'';position:absolute;top:calc(2.5rem + 24px);left:calc(12.5% + 25px);right:calc(12.5% + 25px);height:0.5px;background:var(--aline);}
+@media(max-width:700px){.hiw-grid{grid-template-columns:1fr 1fr;}.hiw-grid::before{display:none;}}
+.hiw-item{padding:2.5rem 1.5rem;text-align:center;}
+.hiw-circle{width:48px;height:48px;border-radius:50%;background:var(--adim);border:0.5px solid var(--aline);display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;position:relative;z-index:1;}
+.hiw-n{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--accent);}
+.hiw-t{font-size:14px;font-weight:500;margin-bottom:8px;}
+.hiw-d{font-size:12px;color:var(--t2);line-height:1.75;}
 
-/* TESTIMONY */
-.testi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;max-width:1000px;margin:0 auto;}
-.testi-card{background:var(--card);border:0.5px solid var(--line);border-radius:12px;padding:1.5rem;}
-.testi-stars{color:var(--accent);font-size:12px;margin-bottom:0.8rem;}
-.testi-text{font-size:13px;color:var(--t2);line-height:1.8;margin-bottom:1rem;font-style:italic;}
-.testi-author{display:flex;align-items:center;gap:10px;}
-.testi-avatar{width:34px;height:34px;border-radius:50%;background:var(--adim);border:0.5px solid var(--aline);display:flex;align-items:center;justify-content:center;font-size:14px;}
-.testi-name{font-size:12px;font-weight:500;}
-.testi-loc{font-size:11px;color:var(--t3);}
+/* TESTIMONIALS */
+.tw{max-width:880px;margin:0 auto;}
+.tc{background:var(--card);border:0.5px solid var(--line);border-radius:16px;padding:2.5rem 2.8rem;margin-bottom:14px;display:grid;grid-template-columns:auto 1fr;gap:2rem;align-items:start;transition:border-color .25s;}
+.tc:hover{border-color:var(--aline);}
+.tq{font-family:'Cormorant Garamond',serif;font-size:5rem;line-height:.8;color:var(--aline);user-select:none;padding-top:4px;}
+.tt{font-family:'Cormorant Garamond',serif;font-size:1.18rem;font-weight:300;font-style:italic;color:var(--text);line-height:1.8;margin-bottom:1.4rem;}
+.tf{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.tn{font-size:12px;font-weight:600;letter-spacing:.05em;}
+.tl{font-size:11px;color:var(--t3);margin-top:2px;}
+.ttag{padding:4px 12px;border-radius:20px;font-size:10px;letter-spacing:.07em;background:var(--adim);border:0.5px solid var(--aline);color:var(--accent);}
+@media(max-width:600px){.tc{grid-template-columns:1fr;gap:.8rem;padding:1.8rem;}.tq{font-size:3rem;}}
 
 /* CTA */
-.cta-section{text-align:center;padding:5rem 2rem;}
-.cta-box{max-width:600px;margin:0 auto;background:var(--adim);border:0.5px solid var(--aline);border-radius:20px;padding:3rem 2rem;}
-.cta-box h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.4rem);font-weight:400;margin-bottom:0.8rem;}
-.cta-box p{font-size:13px;color:var(--t2);margin-bottom:2rem;line-height:1.8;}
+.cta{padding:6rem 2rem;text-align:center;}
+.cta-box{max-width:600px;margin:0 auto;background:linear-gradient(135deg,rgba(191,160,106,0.08) 0%,rgba(191,160,106,0.03) 100%);border:0.5px solid var(--aline);border-radius:24px;padding:3.5rem 2.5rem;position:relative;overflow:hidden;}
+.cta-box::before{content:'';position:absolute;top:-60%;left:-20%;width:140%;height:220%;background:radial-gradient(ellipse at center,rgba(191,160,106,0.07) 0%,transparent 60%);pointer-events:none;}
+.cta-box h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,2.6rem);font-weight:400;margin-bottom:.8rem;position:relative;}
+.cta-box p{font-size:13px;color:var(--t2);line-height:1.9;margin-bottom:2rem;position:relative;max-width:400px;margin-left:auto;margin-right:auto;}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;}
 
 /* FOOTER */
-footer{background:var(--sf);border-top:0.5px solid var(--line);padding:3rem 2rem 2rem;}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;max-width:1100px;margin:0 auto;padding-bottom:2rem;border-bottom:0.5px solid var(--line);}
-@media(max-width:700px){.footer-grid{grid-template-columns:1fr 1fr;}}
-.fg-brand .logo{font-size:22px;margin-bottom:0.8rem;}
-.fg-brand p{font-size:12px;color:var(--t2);line-height:1.8;max-width:220px;}
-.fg-col h4{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--t3);margin-bottom:12px;}
-.fg-col a{display:block;font-size:12px;color:var(--t2);margin-bottom:8px;transition:color 0.18s;}
-.fg-col a:hover{color:var(--text);}
-.footer-bottom{max-width:1100px;margin:1.5rem auto 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
-.footer-bottom span{font-size:11px;color:var(--t3);}
+footer{background:var(--sf);border-top:0.5px solid var(--line);padding:3.5rem 2rem 2rem;}
+.fg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;max-width:1100px;margin:0 auto;padding-bottom:2.5rem;border-bottom:0.5px solid var(--line);}
+@media(max-width:680px){.fg{grid-template-columns:1fr 1fr;}}
+.fg-brand .logo{font-size:22px;margin-bottom:1rem;display:block;}
+.fg-brand p{font-size:12px;color:var(--t2);line-height:1.9;max-width:220px;font-weight:300;}
+.fc h4{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);margin-bottom:14px;}
+.fc a{display:block;font-size:12px;color:var(--t2);margin-bottom:10px;transition:color .18s;}
+.fc a:hover{color:var(--text);}
+.fb{max-width:1100px;margin:1.5rem auto 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.fb span{font-size:11px;color:var(--t3);}
 
-@media(max-width:768px){
-  .nav-mid{display:none;}
-  .hero h1{font-size:2rem;}
-  .hs-item{padding:0 1rem;}
-}
+@media(max-width:768px){nav{padding:0 1.2rem;}.nav-mid{display:none;}.hero h1{font-size:2.4rem;}}
 </style>
 </head>
 <body>
@@ -154,31 +188,57 @@ footer{background:var(--sf);border-top:0.5px solid var(--line);padding:3rem 2rem
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
+  <div class="hero-glow"></div>
   <div class="hero-grid"></div>
   <div class="hero-inner">
-    <div class="hero-eyebrow">Global Real Estate Platform</div>
-    <h1>전세계 부동산,<br><i>한 곳에서 탐색하세요</i></h1>
-    <p>미국부터 두바이, 일본, 유럽까지 — 각국의 법규와 세금을 한눈에 비교하고 나에게 맞는 해외 부동산을 찾아보세요.</p>
+    <div class="eyebrow">Global Real Estate Platform</div>
+    <h1>전세계 프리미엄 부동산,<em>한 곳에서</em></h1>
+    <p class="hero-sub">미국·두바이·일본·유럽까지. 각국의 취득 규정과 세금 구조를 비교하고, 나에게 맞는 해외 부동산 투자를 시작하세요.</p>
     <div class="hero-btns">
-      <a href="search.html" class="btn-primary">🔍 매물 검색하기</a>
+      <a href="search.html" class="btn-gold">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        매물 탐색하기
+      </a>
       <a href="regulations.html" class="btn-ghost">국가별 법규 확인</a>
     </div>
     <div class="hero-stats">
-      <div class="hs-item"><div class="hs-num">18</div><div class="hs-label">서비스 국가</div></div>
-      <div class="hs-item"><div class="hs-num">2,400+</div><div class="hs-label">등록 매물</div></div>
-      <div class="hs-item"><div class="hs-num">340+</div><div class="hs-label">전문 에이전트</div></div>
-      <div class="hs-item"><div class="hs-num">98%</div><div class="hs-label">거래 만족도</div></div>
+      <div class="hs"><div class="hs-n">18</div><div class="hs-l">Countries</div></div>
+      <div class="hs"><div class="hs-n">2,400+</div><div class="hs-l">Listings</div></div>
+      <div class="hs"><div class="hs-n">340+</div><div class="hs-l">Agents</div></div>
+      <div class="hs"><div class="hs-n">98%</div><div class="hs-l">Satisfaction</div></div>
     </div>
   </div>
 </section>
 
-<!-- SEARCH BAR -->
-<div class="search-section">
-  <div class="search-bar">
-    <div class="sb-field">
+<div class="mq-wrap">
+  <div class="mq-track">
+    <span class="mq-item">🇺🇸 New York <b>$2.4M</b></span>
+    <span class="mq-item">🇯🇵 Tokyo <b>¥68M</b></span>
+    <span class="mq-item">🇦🇪 Dubai <b>AED 3.2M</b></span>
+    <span class="mq-item">🇫🇷 Paris <b>€1.85M</b></span>
+    <span class="mq-item">🇵🇹 Lisbon <b>€620K</b></span>
+    <span class="mq-item">🇸🇬 Singapore <b>SGD 3.8M</b></span>
+    <span class="mq-item">🇦🇺 Sydney <b>AUD 2.1M</b></span>
+    <span class="mq-item">🇬🇧 London <b>£1.4M</b></span>
+    <span class="mq-item">🇹🇭 Bangkok <b>฿18M</b></span>
+    <span class="mq-item">🇮🇹 Milan <b>€890K</b></span>
+    <span class="mq-item">🇺🇸 New York <b>$2.4M</b></span>
+    <span class="mq-item">🇯🇵 Tokyo <b>¥68M</b></span>
+    <span class="mq-item">🇦🇪 Dubai <b>AED 3.2M</b></span>
+    <span class="mq-item">🇫🇷 Paris <b>€1.85M</b></span>
+    <span class="mq-item">🇵🇹 Lisbon <b>€620K</b></span>
+    <span class="mq-item">🇸🇬 Singapore <b>SGD 3.8M</b></span>
+    <span class="mq-item">🇦🇺 Sydney <b>AUD 2.1M</b></span>
+    <span class="mq-item">🇬🇧 London <b>£1.4M</b></span>
+    <span class="mq-item">🇹🇭 Bangkok <b>฿18M</b></span>
+    <span class="mq-item">🇮🇹 Milan <b>€890K</b></span>
+  </div>
+</div>
+
+<div class="search-wrap reveal">
+  <div class="sbar">
+    <div class="sf">
       <label>국가</label>
       <select onchange="if(this.value)window.location='search.html?country='+this.value">
         <option value="">전체 국가</option>
@@ -196,7 +256,7 @@ footer{background:var(--sf);border-top:0.5px solid var(--line);padding:3rem 2rem
         <option value="kr">🇰🇷 대한민국</option>
       </select>
     </div>
-    <div class="sb-field">
+    <div class="sf">
       <label>매물 유형</label>
       <select>
         <option value="">전체 유형</option>
@@ -207,7 +267,7 @@ footer{background:var(--sf);border-top:0.5px solid var(--line);padding:3rem 2rem
         <option>토지</option>
       </select>
     </div>
-    <div class="sb-field">
+    <div class="sf">
       <label>예산 (USD)</label>
       <select>
         <option value="">전체 가격</option>
@@ -218,243 +278,262 @@ footer{background:var(--sf);border-top:0.5px solid var(--line);padding:3rem 2rem
         <option>$500만 이상</option>
       </select>
     </div>
-    <a href="search.html" class="sb-btn">검색</a>
+    <a href="search.html" class="sbtn">검색</a>
   </div>
 </div>
 
-<!-- FEATURED PROPERTIES -->
 <section>
-  <div class="sec-head">
-    <div class="sec-eye">Featured Listings</div>
-    <div class="sec-title">지금 주목받는 매물</div>
-    <div class="sec-sub">전 세계 프리미엄 부동산 큐레이션</div>
+  <div class="sh reveal">
+    <div class="sh-eye">Featured Listings</div>
+    <div class="sh-title">지금 주목받는 매물</div>
+    <div class="sh-sub">전세계 프리미엄 부동산 큐레이션</div>
   </div>
-  <div class="prop-grid">
+  <div class="pgrid">
 
-    <a href="search.html?id=1" class="prop-card">
+    <a href="search.html?id=1" class="pc reveal">
       <div class="pc-img">
-        <div class="pc-img-inner">🏙️</div>
-        <span class="pc-badge badge-new">NEW</span>
-        <div class="pc-fav">♡</div>
-      </div>
-      <div class="pc-body">
-        <div class="pc-price">$2,400,000</div>
-        <div class="pc-name">Downtown Luxury Penthouse</div>
-        <div class="pc-loc">📍 뉴욕, 미국</div>
-        <div class="pc-meta">
-          <span>🛏 3BR</span><span>🚿 2BA</span><span>📐 185m²</span>
+        <div class="pc-photo" style="background-image:url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&h=560&fit=crop&q=80')"></div>
+        <div class="pc-ov"></div>
+        <div class="pc-top"><span class="badge b-new">NEW</span><div class="fav">♡</div></div>
+        <div class="pc-bot">
+          <div class="pc-price">$2,400,000</div>
+          <div class="pc-name">Downtown Luxury Penthouse</div>
+          <div class="pc-loc">New York, USA</div>
         </div>
       </div>
+      <div class="pc-meta"><span>3 Bed</span><span>2 Bath</span><span>185 m²</span></div>
     </a>
 
-    <a href="search.html?id=2" class="prop-card">
+    <a href="search.html?id=2" class="pc reveal d1">
       <div class="pc-img">
-        <div class="pc-img-inner">⛩️</div>
-        <span class="pc-badge badge-hot">HOT</span>
-        <div class="pc-fav">♡</div>
-      </div>
-      <div class="pc-body">
-        <div class="pc-price">¥68,000,000</div>
-        <div class="pc-name">신주쿠 타워 레지던스</div>
-        <div class="pc-loc">📍 도쿄, 일본</div>
-        <div class="pc-meta">
-          <span>🛏 2BR</span><span>🚿 1BA</span><span>📐 72m²</span>
+        <div class="pc-photo" style="background-image:url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600&h=400&fit=crop&q=80')"></div>
+        <div class="pc-ov"></div>
+        <div class="pc-top"><span class="badge b-hot">HOT</span><div class="fav">♡</div></div>
+        <div class="pc-bot">
+          <div class="pc-price">¥68,000,000</div>
+          <div class="pc-name">신주쿠 타워 레지던스</div>
+          <div class="pc-loc">Tokyo, Japan</div>
         </div>
       </div>
+      <div class="pc-meta"><span>2 Bed</span><span>1 Bath</span><span>72 m²</span></div>
     </a>
 
-    <a href="search.html?id=3" class="prop-card">
+    <a href="search.html?id=3" class="pc reveal d2">
       <div class="pc-img">
-        <div class="pc-img-inner">🌴</div>
-        <span class="pc-badge badge-new">NEW</span>
-        <div class="pc-fav">♡</div>
-      </div>
-      <div class="pc-body">
-        <div class="pc-price">AED 3,200,000</div>
-        <div class="pc-name">Palm Jumeirah Sea View</div>
-        <div class="pc-loc">📍 두바이, UAE</div>
-        <div class="pc-meta">
-          <span>🛏 4BR</span><span>🚿 3BA</span><span>📐 240m²</span>
+        <div class="pc-photo" style="background-image:url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&h=400&fit=crop&q=80')"></div>
+        <div class="pc-ov"></div>
+        <div class="pc-top"><span class="badge b-new">NEW</span><div class="fav">♡</div></div>
+        <div class="pc-bot">
+          <div class="pc-price">AED 3,200,000</div>
+          <div class="pc-name">Palm Jumeirah Sea View</div>
+          <div class="pc-loc">Dubai, UAE</div>
         </div>
       </div>
+      <div class="pc-meta"><span>4 Bed</span><span>3 Bath</span><span>240 m²</span></div>
     </a>
 
-    <a href="search.html?id=4" class="prop-card">
+    <a href="search.html?id=4" class="pc reveal d1">
       <div class="pc-img">
-        <div class="pc-img-inner">🗼</div>
-        <div class="pc-fav">♡</div>
-      </div>
-      <div class="pc-body">
-        <div class="pc-price">€1,850,000</div>
-        <div class="pc-name">Haussmann Boulevard Apartment</div>
-        <div class="pc-loc">📍 파리 8구, 프랑스</div>
-        <div class="pc-meta">
-          <span>🛏 3BR</span><span>🚿 2BA</span><span>📐 130m²</span>
+        <div class="pc-photo" style="background-image:url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&h=400&fit=crop&q=80')"></div>
+        <div class="pc-ov"></div>
+        <div class="pc-top"><div class="fav">♡</div></div>
+        <div class="pc-bot">
+          <div class="pc-price">€1,850,000</div>
+          <div class="pc-name">Haussmann Boulevard Apartment</div>
+          <div class="pc-loc">Paris 8ème, France</div>
         </div>
       </div>
+      <div class="pc-meta"><span>3 Bed</span><span>2 Bath</span><span>130 m²</span></div>
     </a>
 
-    <a href="search.html?id=5" class="prop-card">
+    <a href="search.html?id=5" class="pc reveal d2">
       <div class="pc-img">
-        <div class="pc-img-inner">🏖️</div>
-        <span class="pc-badge badge-rent">임대</span>
-        <div class="pc-fav">♡</div>
-      </div>
-      <div class="pc-body">
-        <div class="pc-price">€320,000</div>
-        <div class="pc-name">Algarve Beachfront Villa</div>
-        <div class="pc-loc">📍 파루, 포르투갈</div>
-        <div class="pc-meta">
-          <span>🛏 4BR</span><span>🚿 3BA</span><span>📐 220m²</span>
+        <div class="pc-photo" style="background-image:url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&h=400&fit=crop&q=80')"></div>
+        <div class="pc-ov"></div>
+        <div class="pc-top"><span class="badge b-rent">RENTAL</span><div class="fav">♡</div></div>
+        <div class="pc-bot">
+          <div class="pc-price">€320,000</div>
+          <div class="pc-name">Algarve Beachfront Villa</div>
+          <div class="pc-loc">Faro, Portugal</div>
         </div>
       </div>
+      <div class="pc-meta"><span>4 Bed</span><span>3 Bath</span><span>220 m²</span></div>
     </a>
 
-    <a href="search.html?id=6" class="prop-card">
+    <a href="search.html?id=6" class="pc reveal d3">
       <div class="pc-img">
-        <div class="pc-img-inner">🌺</div>
-        <span class="pc-badge badge-hot">HOT</span>
-        <div class="pc-fav">♡</div>
-      </div>
-      <div class="pc-body">
-        <div class="pc-price">$1,100,000</div>
-        <div class="pc-name">Waikiki Ocean View Condo</div>
-        <div class="pc-loc">📍 호놀룰루, 하와이</div>
-        <div class="pc-meta">
-          <span>🛏 2BR</span><span>🚿 2BA</span><span>📐 95m²</span>
+        <div class="pc-photo" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop&q=80')"></div>
+        <div class="pc-ov"></div>
+        <div class="pc-top"><span class="badge b-hot">HOT</span><div class="fav">♡</div></div>
+        <div class="pc-bot">
+          <div class="pc-price">$1,100,000</div>
+          <div class="pc-name">Waikiki Ocean View Condo</div>
+          <div class="pc-loc">Honolulu, Hawaii</div>
         </div>
       </div>
+      <div class="pc-meta"><span>2 Bed</span><span>2 Bath</span><span>95 m²</span></div>
     </a>
 
   </div>
-  <div style="text-align:center;margin-top:2rem;">
-    <a href="search.html" class="btn-ghost">전체 매물 보기 →</a>
+  <div style="text-align:center;margin-top:2.5rem;">
+    <a href="search.html" class="btn-ghost">전체 매물 보기</a>
   </div>
 </section>
 
-<!-- COUNTRIES -->
 <section style="background:var(--sf);border-top:0.5px solid var(--line);border-bottom:0.5px solid var(--line);">
-  <div class="sec-head">
-    <div class="sec-eye">Destinations</div>
-    <div class="sec-title">국가별로 탐색하기</div>
-    <div class="sec-sub">관심 있는 나라를 선택해 매물과 법규를 한번에 확인하세요</div>
+  <div class="sh reveal">
+    <div class="sh-eye">Destinations</div>
+    <div class="sh-title">국가별 탐색</div>
+    <div class="sh-sub">관심 국가를 선택해 매물과 법규를 한번에 확인하세요</div>
   </div>
-  <div class="country-grid">
-    <a href="country.html?c=us" class="country-card"><div class="cc-flag">🇺🇸</div><div class="cc-name">미국</div><div class="cc-count">286개 매물</div><span class="cc-status cs-ok">취득 자유</span></a>
-    <a href="country.html?c=jp" class="country-card"><div class="cc-flag">🇯🇵</div><div class="cc-name">일본</div><div class="cc-count">193개 매물</div><span class="cc-status cs-ok">취득 자유</span></a>
-    <a href="country.html?c=ae" class="country-card"><div class="cc-flag">🇦🇪</div><div class="cc-name">두바이</div><div class="cc-count">174개 매물</div><span class="cc-status cs-ok">지정구역 가능</span></a>
-    <a href="country.html?c=fr" class="country-card"><div class="cc-flag">🇫🇷</div><div class="cc-name">프랑스</div><div class="cc-count">142개 매물</div><span class="cc-status cs-ok">취득 자유</span></a>
-    <a href="country.html?c=pt" class="country-card"><div class="cc-flag">🇵🇹</div><div class="cc-name">포르투갈</div><div class="cc-count">118개 매물</div><span class="cc-status cs-ok">취득 자유</span></a>
-    <a href="country.html?c=th" class="country-card"><div class="cc-flag">🇹🇭</div><div class="cc-name">태국</div><div class="cc-count">97개 매물</div><span class="cc-status cs-warn">콘도만 가능</span></a>
-    <a href="country.html?c=sg" class="country-card"><div class="cc-flag">🇸🇬</div><div class="cc-name">싱가포르</div><div class="cc-count">84개 매물</div><span class="cc-status cs-warn">고세율</span></a>
-    <a href="country.html?c=au" class="country-card"><div class="cc-flag">🇦🇺</div><div class="cc-name">호주</div><div class="cc-count">76개 매물</div><span class="cc-status cs-warn">신고 필요</span></a>
-    <a href="country.html?c=gb" class="country-card"><div class="cc-flag">🇬🇧</div><div class="cc-name">영국</div><div class="cc-count">68개 매물</div><span class="cc-status cs-ok">취득 자유</span></a>
-    <a href="country.html?c=it" class="country-card"><div class="cc-flag">🇮🇹</div><div class="cc-name">이탈리아</div><div class="cc-count">61개 매물</div><span class="cc-status cs-ok">취득 자유</span></a>
-    <a href="country.html?c=ph" class="country-card"><div class="cc-flag">🇵🇭</div><div class="cc-name">필리핀</div><div class="cc-count">53개 매물</div><span class="cc-status cs-warn">콘도만 가능</span></a>
-    <a href="country.html?c=kr" class="country-card"><div class="cc-flag">🇰🇷</div><div class="cc-name">대한민국</div><div class="cc-count">48개 매물</div><span class="cc-status cs-ok">신고 후 가능</span></a>
+  <div class="cgrid">
+    <a href="country.html?c=us" class="cc reveal">
+      <div class="cc-bg" style="background-image:url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=400&h=260&fit=crop&q=75')"></div>
+      <div class="cc-ov"></div><span class="cc-tag t-ok">취득 자유</span>
+      <div class="cc-cont"><div class="cc-flag">🇺🇸</div><div class="cc-name">미국</div><div class="cc-cnt">286 listings</div></div>
+    </a>
+    <a href="country.html?c=jp" class="cc reveal d1">
+      <div class="cc-bg" style="background-image:url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=400&h=260&fit=crop&q=75')"></div>
+      <div class="cc-ov"></div><span class="cc-tag t-ok">취득 자유</span>
+      <div class="cc-cont"><div class="cc-flag">🇯🇵</div><div class="cc-name">일본</div><div class="cc-cnt">193 listings</div></div>
+    </a>
+    <a href="country.html?c=ae" class="cc reveal d2">
+      <div class="cc-bg" style="background-image:url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400&h=260&fit=crop&q=75')"></div>
+      <div class="cc-ov"></div><span class="cc-tag t-ok">지정구역 가능</span>
+      <div class="cc-cont"><div class="cc-flag">🇦🇪</div><div class="cc-name">두바이</div><div class="cc-cnt">174 listings</div></div>
+    </a>
+    <a href="country.html?c=fr" class="cc reveal d3">
+      <div class="cc-bg" style="background-image:url('https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=400&h=260&fit=crop&q=75')"></div>
+      <div class="cc-ov"></div><span class="cc-tag t-ok">취득 자유</span>
+      <div class="cc-cont"><div class="cc-flag">🇫🇷</div><div class="cc-name">프랑스</div><div class="cc-cnt">142 listings</div></div>
+    </a>
+    <a href="country.html?c=pt" class="cc reveal">
+      <div class="cc-bg" style="background-image:url('https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=400&h=260&fit=crop&q=75')"></div>
+      <div class="cc-ov"></div><span class="cc-tag t-ok">취득 자유</span>
+      <div class="cc-cont"><div class="cc-flag">🇵🇹</div><div class="cc-name">포르투갈</div><div class="cc-cnt">118 listings</div></div>
+    </a>
+    <a href="country.html?c=th" class="cc reveal d1">
+      <div class="cc-bg" style="background-image:url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=400&h=260&fit=crop&q=75')"></div>
+      <div class="cc-ov"></div><span class="cc-tag t-warn">콘도만 가능</span>
+      <div class="cc-cont"><div class="cc-flag">🇹🇭</div><div class="cc-name">태국</div><div class="cc-cnt">97 listings</div></div>
+    </a>
+    <a href="country.html?c=sg" class="cc reveal d2">
+      <div class="cc-bg" style="background-image:url('https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=400&h=260&fit=crop&q=75')"></div>
+      <div class="cc-ov"></div><span class="cc-tag t-warn">고세율</span>
+      <div class="cc-cont"><div class="cc-flag">🇸🇬</div><div class="cc-name">싱가포르</div><div class="cc-cnt">84 listings</div></div>
+    </a>
+    <a href="country.html?c=au" class="cc reveal d3">
+      <div class="cc-bg" style="background-image:url('https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=400&h=260&fit=crop&q=75')"></div>
+      <div class="cc-ov"></div><span class="cc-tag t-warn">신고 필요</span>
+      <div class="cc-cont"><div class="cc-flag">🇦🇺</div><div class="cc-name">호주</div><div class="cc-cnt">76 listings</div></div>
+    </a>
+    <a href="country.html?c=gb" class="cc reveal">
+      <div class="cc-bg" style="background-image:url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&h=260&fit=crop&q=75')"></div>
+      <div class="cc-ov"></div><span class="cc-tag t-ok">취득 자유</span>
+      <div class="cc-cont"><div class="cc-flag">🇬🇧</div><div class="cc-name">영국</div><div class="cc-cnt">68 listings</div></div>
+    </a>
+    <a href="country.html?c=it" class="cc reveal d1">
+      <div class="cc-bg" style="background-image:url('https://images.unsplash.com/photo-1534445867742-43195f401b6c?w=400&h=260&fit=crop&q=75')"></div>
+      <div class="cc-ov"></div><span class="cc-tag t-ok">취득 자유</span>
+      <div class="cc-cont"><div class="cc-flag">🇮🇹</div><div class="cc-name">이탈리아</div><div class="cc-cnt">61 listings</div></div>
+    </a>
+    <a href="country.html?c=ph" class="cc reveal d2">
+      <div class="cc-bg" style="background-image:url('https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=400&h=260&fit=crop&q=75')"></div>
+      <div class="cc-ov"></div><span class="cc-tag t-warn">콘도만 가능</span>
+      <div class="cc-cont"><div class="cc-flag">🇵🇭</div><div class="cc-name">필리핀</div><div class="cc-cnt">53 listings</div></div>
+    </a>
+    <a href="country.html?c=kr" class="cc reveal d3">
+      <div class="cc-bg" style="background-image:url('https://images.unsplash.com/photo-1538485399081-7191377e8241?w=400&h=260&fit=crop&q=75')"></div>
+      <div class="cc-ov"></div><span class="cc-tag t-ok">신고 후 가능</span>
+      <div class="cc-cont"><div class="cc-flag">🇰🇷</div><div class="cc-name">대한민국</div><div class="cc-cnt">48 listings</div></div>
+    </a>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="hiw-section">
-  <div class="sec-head">
-    <div class="sec-eye">How It Works</div>
-    <div class="sec-title">어떻게 이용하나요?</div>
+<section class="hiw">
+  <div class="sh reveal">
+    <div class="sh-eye">How It Works</div>
+    <div class="sh-title">어떻게 이용하나요?</div>
   </div>
   <div class="hiw-grid">
-    <div class="hiw-item">
-      <div class="hiw-num">01</div>
-      <div class="hiw-title">국가 · 조건 선택</div>
-      <div class="hiw-desc">원하는 국가, 예산, 매물 유형을 선택해 맞춤 매물을 탐색하세요.</div>
-    </div>
-    <div class="hiw-item">
-      <div class="hiw-num">02</div>
-      <div class="hiw-title">법규 확인</div>
-      <div class="hiw-desc">외국인 취득 가능 여부, 세금, 주의 사항을 국가별로 미리 파악하세요.</div>
-    </div>
-    <div class="hiw-item">
-      <div class="hiw-num">03</div>
-      <div class="hiw-title">전문가 연결</div>
-      <div class="hiw-desc">현지 공인 에이전트 및 법무 전문가와 직접 연결해 안전하게 진행하세요.</div>
-    </div>
-    <div class="hiw-item">
-      <div class="hiw-num">04</div>
-      <div class="hiw-title">안전한 거래 완료</div>
-      <div class="hiw-desc">에스크로 및 현지 법률에 맞춘 절차로 신뢰할 수 있는 거래를 완료하세요.</div>
-    </div>
+    <div class="hiw-item reveal"><div class="hiw-circle"><span class="hiw-n">01</span></div><div class="hiw-t">국가 · 조건 선택</div><div class="hiw-d">원하는 국가, 예산, 매물 유형을 선택해 맞춤 매물을 탐색하세요.</div></div>
+    <div class="hiw-item reveal d1"><div class="hiw-circle"><span class="hiw-n">02</span></div><div class="hiw-t">법규 확인</div><div class="hiw-d">외국인 취득 가능 여부, 세금, 주의사항을 국가별로 미리 파악하세요.</div></div>
+    <div class="hiw-item reveal d2"><div class="hiw-circle"><span class="hiw-n">03</span></div><div class="hiw-t">전문가 연결</div><div class="hiw-d">현지 공인 에이전트 및 법무 전문가와 직접 연결해 안전하게 진행하세요.</div></div>
+    <div class="hiw-item reveal d3"><div class="hiw-circle"><span class="hiw-n">04</span></div><div class="hiw-t">안전한 거래 완료</div><div class="hiw-d">에스크로 및 현지 법률에 맞춘 절차로 신뢰할 수 있는 거래를 완료하세요.</div></div>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
 <section>
-  <div class="sec-head">
-    <div class="sec-eye">Real Stories</div>
-    <div class="sec-title">실제 이용 후기</div>
+  <div class="sh reveal">
+    <div class="sh-eye">Real Stories</div>
+    <div class="sh-title">실제 이용 후기</div>
   </div>
-  <div class="testi-grid">
-    <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">"도쿄 아파트 구매 시 외국인 규제를 전혀 몰랐는데, Onearth 법규 가이드 덕분에 세금까지 완벽히 준비할 수 있었어요."</div>
-      <div class="testi-author"><div class="testi-avatar">🧑</div><div><div class="testi-name">김준혁</div><div class="testi-loc">도쿄 아파트 취득 · 서울 거주</div></div></div>
+  <div class="tw">
+    <div class="tc reveal">
+      <div class="tq">"</div>
+      <div>
+        <div class="tt">도쿄 아파트 구매 시 외국인 규제를 전혀 몰랐는데, Onearth 법규 가이드 덕분에 취득세부터 신고 절차까지 완벽히 준비할 수 있었습니다. 현지 에이전트 연결도 하루 만에 됐어요.</div>
+        <div class="tf"><div><div class="tn">김준혁</div><div class="tl">서울 · IT 기업 대표</div></div><span class="ttag">🇯🇵 도쿄 아파트 취득</span></div>
+      </div>
     </div>
-    <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">"두바이 프리홀드 존 콘도를 Golden Visa와 함께 구매했습니다. 세금 0%에 임대 수익까지 — 최고의 선택이었어요."</div>
-      <div class="testi-author"><div class="testi-avatar">👩</div><div><div class="testi-name">이수민</div><div class="testi-loc">두바이 콘도 취득 · 부산 거주</div></div></div>
+    <div class="tc reveal d1">
+      <div class="tq">"</div>
+      <div>
+        <div class="tt">두바이 프리홀드 존 콘도를 Golden Visa와 함께 구매했습니다. 세금이 없고 임대 수익률도 연 7%대가 나오고 있어요. 법규 페이지에서 미리 파악하고 결정한 게 주효했습니다.</div>
+        <div class="tf"><div><div class="tn">이수민</div><div class="tl">부산 · 자산운용 매니저</div></div><span class="ttag">🇦🇪 두바이 콘도 + Golden Visa</span></div>
+      </div>
     </div>
-    <div class="testi-card">
-      <div class="testi-stars">★★★★☆</div>
-      <div class="testi-text">"포르투갈 알가르베 빌라를 원격으로 구매했습니다. 현지 에이전트 연결이 매우 빠르고 신뢰할 수 있었어요."</div>
-      <div class="testi-author"><div class="testi-avatar">🧔</div><div><div class="testi-name">박성진</div><div class="testi-loc">포르투갈 빌라 취득 · 대전 거주</div></div></div>
+    <div class="tc reveal d2">
+      <div class="tq">"</div>
+      <div>
+        <div class="tt">포르투갈 알가르베 빌라를 한국에서 원격으로 계약했습니다. 공증인 절차나 IMT 세금 같은 생소한 내용을 Onearth에서 미리 파악하고 갔더니 현지 변호사도 놀랐어요.</div>
+        <div class="tf"><div><div class="tn">박성진</div><div class="tl">대전 · 의사</div></div><span class="ttag">🇵🇹 포르투갈 빌라 취득</span></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<div class="cta-section">
-  <div class="cta-box">
+<div class="cta">
+  <div class="cta-box reveal">
     <h2>지금 바로 시작하세요</h2>
-    <p>전 세계 2,400개 이상의 매물을 무료로 탐색하고, 국가별 법규를 확인해보세요. 매물 등록도 간단하게 가능합니다.</p>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-      <a href="search.html" class="btn-primary">매물 탐색하기</a>
+    <p>전 세계 2,400개 이상의 매물을 무료로 탐색하고, 국가별 법규를 확인해보세요.</p>
+    <div class="cta-btns">
+      <a href="search.html" class="btn-gold">매물 탐색하기</a>
       <a href="register.html" class="btn-ghost">매물 등록하기</a>
     </div>
   </div>
 </div>
 
 <footer>
-  <div class="footer-grid">
+  <div class="fg">
     <div class="fg-brand">
-      <div class="logo">On<b>●</b>earth</div>
+      <a class="logo" href="index.html">On<b>●</b>earth</a>
       <p>전세계 부동산을 한 플랫폼에서. 국가별 법규부터 매물 탐색, 전문가 연결까지.</p>
     </div>
-    <div class="fg-col">
-      <h4>서비스</h4>
-      <a href="search.html">매물 검색</a>
-      <a href="country.html">국가별 탐색</a>
-      <a href="regulations.html">법규 안내</a>
-      <a href="register.html">매물 등록</a>
-    </div>
-    <div class="fg-col">
-      <h4>인기 지역</h4>
-      <a href="country.html?c=us">미국</a>
-      <a href="country.html?c=jp">일본</a>
-      <a href="country.html?c=ae">두바이</a>
-      <a href="country.html?c=fr">프랑스</a>
-    </div>
-    <div class="fg-col">
-      <h4>회사</h4>
-      <a href="#">소개</a>
-      <a href="#">이용약관</a>
-      <a href="#">개인정보처리방침</a>
-      <a href="#">고객센터</a>
-    </div>
+    <div class="fc"><h4>서비스</h4><a href="search.html">매물 검색</a><a href="country.html">국가별 탐색</a><a href="regulations.html">법규 안내</a><a href="register.html">매물 등록</a></div>
+    <div class="fc"><h4>인기 지역</h4><a href="country.html?c=us">미국</a><a href="country.html?c=jp">일본</a><a href="country.html?c=ae">두바이</a><a href="country.html?c=fr">프랑스</a></div>
+    <div class="fc"><h4>회사</h4><a href="#">소개</a><a href="#">이용약관</a><a href="#">개인정보처리방침</a><a href="#">고객센터</a></div>
   </div>
-  <div class="footer-bottom">
-    <span class="logo" style="font-size:16px;">On<b>●</b>earth</span>
+  <div class="fb">
+    <a class="logo" style="font-size:17px;" href="index.html">On<b>●</b>earth</a>
     <span>© 2025 ONEARTH. 본 정보는 참고용이며 법적 효력이 없습니다.</span>
   </div>
 </footer>
 
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);} });
+}, {threshold: 0.08});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+document.querySelectorAll('.fav').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    const on = btn.textContent === '♥';
+    btn.textContent = on ? '♡' : '♥';
+    btn.style.color = on ? '' : 'var(--accent)';
+  });
+});
+</script>
 </body>
 </html>
