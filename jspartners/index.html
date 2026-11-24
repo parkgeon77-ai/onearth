@@ -114,7 +114,7 @@ details[open] summary::after{rotate:-135deg;translate:0 -20%;border-color:var(--
 details p{padding:0 0 22px;color:var(--body);font-size:.95rem}
 
 /* trust */
-.trust{display:grid;gap:34px;align-items:center}
+.trust{display:grid;gap:30px;justify-items:center;text-align:center}
 .cert{position:relative;border-radius:20px;overflow:hidden;cursor:zoom-in;border:1px solid var(--line);background:#fff;box-shadow:0 40px 70px -40px rgba(11,18,32,.4);max-width:380px;margin-inline:auto}
 .cert img{width:100%}
 .cert span{position:absolute;right:10px;bottom:10px;background:var(--navy);color:#fff;font-size:.72rem;font-weight:600;padding:6px 13px;border-radius:999px}
@@ -124,6 +124,10 @@ details p{padding:0 0 22px;color:var(--body);font-size:.95rem}
 .facts dt{color:var(--mute);white-space:nowrap}
 .facts dd{text-align:right;font-weight:700}
 
+.expert{margin-top:14px;display:flex;gap:16px;align-items:center;background:var(--blue-soft);border-radius:24px;padding:22px 22px}
+.expert .ei{flex:none;width:48px;height:48px;border-radius:16px;background:#fff;display:grid;place-items:center}
+.expert svg{width:26px;height:26px;stroke:var(--blue);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.expert p{font-size:.95rem;color:var(--body)}.expert b{color:var(--ink);font-weight:800}
 /* links */
 .links{margin-top:34px;display:grid;gap:12px}
 .link{display:flex;align-items:center;gap:16px;padding:20px;border-radius:24px;background:var(--soft);transition:.25s;position:relative}
@@ -172,7 +176,7 @@ footer b{color:var(--ink);font-size:.9rem}
   .card.big{grid-column:span 2}
   .points{grid-template-columns:repeat(3,1fr);gap:16px}
   .pt{flex-direction:column;gap:30px;padding:32px 28px}
-  .proc,.trust{grid-template-columns:1fr 1fr;gap:70px}
+  .proc{grid-template-columns:1fr 1fr;gap:70px}
   .links{grid-template-columns:repeat(3,1fr)}
   .link{flex-direction:column;align-items:flex-start;padding:28px}
   .link::after{position:absolute;right:24px;top:24px;margin:0}
@@ -203,7 +207,6 @@ footer b{color:var(--ink);font-size:.9rem}
     </div>
     <div class="visual rv">
       <div class="main"><img src="img/bg.jpg" alt="" fetchpriority="high"></div>
-      <div class="chip stat"><b>중소기업상담회사</b><span>공식 등록 · 제2026-704호</span></div>
       <div class="chip prof"><img src="img/profile.jpg" alt="박건 대표"><div><b>박건 대표</b><span>경영컨설턴트</span></div></div>
     </div>
   </div>
@@ -224,11 +227,12 @@ footer b{color:var(--ink);font-size:.9rem}
     <div class="bento">
       <div class="card big rv"><div><b>경영전략</b><span>방향 설정 · 성장 로드맵</span></div><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.500 8.500l-2 5-5 2 2-5z"/></svg></div></div>
       <div class="card rv"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M14.500 9.500c0-1-1.100-1.800-2.500-1.800s-2.500.8-2.500 1.800 1.100 1.600 2.500 1.900 2.500.9 2.500 1.900-1.100 1.800-2.500 1.800-2.500-.8-2.500-1.800M12 6.500v1.200M12 16.300v1.200"/></svg></div><b>자금조달</b><span>정책자금 · 융자</span></div>
-      <div class="card rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.400 8-8 9.500C7.400 20 4 17 4 12V6z"/><path d="M8.500 12l2.500 2.500 4.500-5"/></svg></div><b>기업인증</b><span>벤처 · 이노비즈 등</span></div>
+      <div class="card rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.400 8-8 9.500C7.400 20 4 17 4 12V6z"/><path d="M8.500 12l2.500 2.500 4.500-5"/></svg></div><b>기업인증</b><span>소속 행정사 · 전문가 진행</span></div>
       <div class="card rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20h16M7 20v-7M12 20V6M17 20v-10"/></svg></div><b>정부지원사업</b><span>공고 · 선정 전략</span></div>
-      <div class="card rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.400 10.900c.5.400.8 1 .8 1.600v.5h5.200v-.5c0-.6.300-1.200.8-1.600A6 6 0 0012 3z"/></svg></div><b>지식재산권</b><span>특허 · 상표</span></div>
+      <div class="card rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.400 10.900c.5.400.8 1 .8 1.600v.5h5.200v-.5c0-.6.300-1.200.8-1.600A6 6 0 0012 3z"/></svg></div><b>지식재산권</b><span>소속 변리사 · 전문가 진행</span></div>
       <div class="card big rv"><div><b>AI 활용</b><span>업무 · 비즈니스 적용</span></div><div class="ic"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2.500"/><path d="M10 10h4v4h-4zM9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg></div></div>
     </div>
+    <div class="expert rv"><div class="ei"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.500 20c0-3.600 2.900-6 6.500-6s6.500 2.400 6.500 6M16 4.500a3.500 3.500 0 010 7M18 14.300c2.200.7 3.500 2.600 3.500 5.700"/></svg></div><p><b>기업인증 · 지식재산권 등 전문 분야</b>는<br>회사에 소속된 <b>행정사, 변리사</b> 등 전문가가 직접 진행합니다.</p></div>
   </div>
 </section>
 
@@ -266,19 +270,12 @@ footer b{color:var(--ink);font-size:.9rem}
 
 <section class="sec-soft">
   <div class="wrap trust">
-    <div class="rv">
-      <div class="cert" id="certBtn" role="button" tabindex="0" aria-label="등록증 크게 보기"><img src="img/cert.jpg" alt="중소기업상담회사 등록증" loading="lazy"><span>크게 보기 +</span></div>
-    </div>
     <div>
       <span class="tag rv">신뢰</span>
       <h2 class="rv">공식 등록된<br>중소기업상담회사</h2>
-      <p class="lead rv">정도파트너스그룹은 「중소기업창업 지원법」에 따라 인천지방중소벤처기업청에 등록된 중소기업상담회사입니다.</p>
-      <dl class="facts rv">
-        <div><dt>상호</dt><dd>정도파트너스그룹 주식회사</dd></div>
-        <div><dt>등록번호</dt><dd>제2026-704호</dd></div>
-        <div><dt>등록일</dt><dd>2026년 9월 8일</dd></div>
-        <div><dt>등록기관</dt><dd>인천지방중소벤처기업청</dd></div>
-      </dl>
+    </div>
+    <div class="rv">
+      <div class="cert" id="certBtn" role="button" tabindex="0" aria-label="등록증 크게 보기"><img src="img/cert.jpg" alt="중소기업상담회사 등록증" loading="lazy"><span>크게 보기 +</span></div>
     </div>
   </div>
 </section>
@@ -313,7 +310,8 @@ footer b{color:var(--ink);font-size:.9rem}
 <footer>
   <b>정도파트너스그룹 주식회사 · 경기남부본부</b><br>
   경기남부본부 대표 박건 | 경영컨설턴트<br>
-  인천광역시 서해구 새오개로111번안길 15, 1동 3층<br>
+  <b style="font-size:.78rem;color:var(--body)">경기남부본부</b> 경기도 수원시 장안구 이목로17, 923호<br>
+  <b style="font-size:.78rem;color:var(--body)">본사</b> 인천광역시 서해구 새오개로111번안길 15, 1동 3층<br>
   © Jeongdo Partners Group. All rights reserved.
 </footer>
 
